@@ -1,0 +1,10 @@
+-lib heaps
+-lib domkit
+
+-D domkit
+-D domkit_heaps
+--macro DomKitInit.setup()
+-main DomKitApp
+
+-D windowTitle=Domkit Sample
+-D windowSize=1024x768

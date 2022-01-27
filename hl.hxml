@@ -1,0 +1,3 @@
+common.hxml
+-lib hlsdl
+-hl build/domkit-sample.hl

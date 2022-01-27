@@ -1,0 +1,4 @@
+common.hxml
+-js build/domkit-sample.js
+
+-dce full

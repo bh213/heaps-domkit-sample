@@ -1,0 +1,76 @@
+{
+	"skipTerminateQuickPick": true,
+	"skipSwitchToOutput": false,
+	"skipErrorMessage": false,
+	"commands": [
+		{
+			"text": "▶ Run",
+			"color": "lightGreen",
+			"commandType":"exec",
+			"command": "run.bat",
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -9
+		},	
+	
+		{
+			"text": "🐌 Run Tests",
+			"color": "lightBlue",
+			"commandType":"palette",
+			"command": "test-explorer.run-all",
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -15
+		},
+		{
+			"text": "🌍 Build JS",
+			"color": "darkgray",
+			"command": "haxe js.hxml",
+			"commandType": "exec",
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"skipErrorMessage": false,
+			"skipSwitchToOutput": false,
+			"priority": -20
+		},
+		{
+			"text": "🌍 Run JS",
+			"color": "darkgray",
+			"command": "start index.html",
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -21
+		},
+		{
+			"text": "💣 Restart Haxe",
+			"color": "yellow",
+			"commandType":"palette",
+			"command": "haxe.restartLanguageServer",
+
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -22
+		},		
+		{
+			"text": "🚑 Haxe diag check",
+			"color": "orange",
+			"commandType":"palette",
+			"command": "haxe.runGlobalDiagnostics",
+
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -23
+		},		
+		
+		{
+			"text": "$(mark-github) DomKit",
+			"color": "Black",
+			"commandType":"exec",
+			"command": "start https://heaps.io/documentation/domkit.html",
+
+			"alignment": "left",
+			"skipTerminateQuickPick": false,
+			"priority": -24
+		}
+	]
+}

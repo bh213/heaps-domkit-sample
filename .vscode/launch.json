@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"configurations": [
+		{
+            "name": "HL debug",
+            "request": "launch",
+            "args": [],
+            "type": "hl",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "HaxeActiveConf"
+
+        },
+	]
+}

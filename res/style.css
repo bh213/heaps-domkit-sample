@@ -1,0 +1,326 @@
+/* Positions */
+.grid-top-1 {
+    x:128;
+    y:96;
+}
+
+.grid-top-2 {
+    x:384;
+    y:96;
+}
+
+.grid-top-3 {
+    x:640;
+    y:96;
+}
+
+.grid-mid-1 {
+    x:128;
+    y:288;
+}
+
+.grid-mid-2 {
+    x:384;
+    y:288;
+}
+
+.grid-mid-3 {
+    x:640;
+    y:288;
+}
+
+.grid-bot-1 {
+    x:128;
+    y:480;
+}
+
+.grid-bot-2 {
+    x:384;
+    y:480;
+}
+
+.grid-bot-3 {
+    x:640;
+    y:480;
+}
+
+
+
+.grid-center-text {
+    max-width:256;
+    text-align: center;
+}
+
+#resizeNested {
+    scale-x:0.2;
+    scale-y:0.2;
+    transition:scale-x;
+    transition:scale-y;
+
+}
+
+#resizeNested.big {
+    scale-x:1.0;
+    scale-y:1.0;
+    transition:scale-x;
+    transition:scale-y;
+}
+
+#filteredNested.filtered {
+    filter: grayscale() blur(2);
+}
+
+
+#helpText {
+    y:700;
+    x:0;
+    max-width:1024;
+    text-align: center;
+}
+
+  /* <nested> styles */
+
+
+nested {
+    padding:10;
+    width:100;
+    height:100;
+    background: yellow;
+}
+
+
+nested nested {
+    x:10;
+    y:10;
+    width:80;
+    height:80;
+    background: red;
+}
+
+nested nested nested{
+    x:10;
+    y:10;
+    width:60;
+    height:60;
+    background: blue;
+}
+
+nested nested nested nested{
+    x:10;
+    y:10;
+    width:40;
+    height:40;
+    background: green;
+}
+
+nested nested nested nested nested{
+    x:10;
+    y:10;
+    width:20;
+    height:20;
+    background: white;
+}
+
+  /* <button> styles */
+
+button {
+    min-width:100;
+    height:30;
+    background:red;
+    cursor:button;
+    padding:5;
+}
+button text {
+    align: middle middle;
+    
+}
+
+button:hover {
+    filter:brightness(0.5);
+}
+
+button:active {
+    background:green;
+}
+
+/* <bitmap id="bitmap1"/> */
+
+#bitmap1 {
+    x:550;
+    y:30;
+    /* custom CSS parser property: See MyCustomCSSParser.hx */
+    src: perlin(300, 300, 20.0, red);
+}
+
+/* <squares> */
+
+#animationSquares {
+    scale:1;
+    transition:rotation;
+    
+}
+
+#animationSquares.rotate {
+    rotation:180;
+    transition:rotation;
+}
+
+squares {
+    multiline: true;
+    max-width:140;
+}
+
+#filterSquares.filtered{
+    filter:outline(8, white) saturate(100);
+}
+
+squares bitmap.square1 {
+    /* custom CSS property, see MyCustomCssParser */
+    src: perlin(64, 64, 5.0, red);
+}
+
+squares bitmap.square2 {
+    /* custom CSS property, see MyCustomCssParser */
+    src: perlin(64, 64, 10.0, green);
+}
+squares bitmap.square3 {
+    /* custom CSS property, see MyCustomCssParser */
+    src: perlin(64, 64, 30.0, blue);
+}
+squares bitmap.square4 {
+    /* custom CSS property, see MyCustomCssParser */
+    src: perlin(64, 64, 100.0, all);
+}
+
+#titleText {
+    max-width:1024;
+    text-align: center;
+    y:10;
+}
+
+#nextButton {
+    x:800;
+    y:700;
+    filter:grayscale(0.5) outline(1, white);
+}
+
+#prevButton {
+    x:100;
+    y:700;
+    filter:grayscale(0.5) outline(1, white);
+    
+}
+
+
+
+
+/* screen 3 */
+
+#list {
+    vertical:true;
+    min-width:100;
+    min-height:100;
+    background: red;
+    vspacing:3;
+}
+item {
+    min-width:100;
+    min-height:10;
+    padding:5;
+    background: gray;
+    alpha:0;
+    transition: alpha 1s;
+    
+}
+item.added {
+    transition: alpha 1s;
+    alpha:1;
+}
+
+item:odd text {
+    /* custom CSS property, see MyCustomCssParser */
+    font:myfont(m6x11);
+}
+
+/* item:first-child text {
+    color:yellow; 
+}
+
+
+item:last-child text  {
+    color:black;
+} */
+
+
+item:even {
+    filter:brightness(0.2);
+}
+
+
+item text {
+    color:white;
+    text-shadow:  1 1 black 0.5;
+    halign:middle;
+    
+}
+
+.button-list {
+    padding:5px;
+    vspacing:5px;
+}
+
+
+/* screen 4  */
+
+flowSample {
+    debug:true;
+}
+
+flowItem {
+    width:40; 
+    height:40;
+    background:green;
+}
+
+#flowSample1 {
+    layout:vertical; 
+}
+
+#flowSample2 {
+    layout:horizontal; 
+}
+
+#flowSample3 {
+    layout:stack;  
+}
+#flowSample3 .flow-item-1  {
+    scale:3;
+}
+#flowSample3 .flow-item-2 {
+    scale:2.5;
+    background:red; 
+}
+#flowSample3 .flow-item-3 {
+    scale:2;
+    background:blue; 
+}
+
+#flowSample3 flowItem.flow-item-4 {
+    scale:1.5;
+    background:yellow;  
+}
+#flowSample3 .flow-item-5 {
+    scale:1;
+}
+
+/* #flowSample3 flowItem:first-child {
+    scale:2;
+    background:blue;
+} */
+
+/*  Does not work?
+
+#flowSample3 flowItem:last-child {
+    scale:4;
+    background:gray;
+} */
