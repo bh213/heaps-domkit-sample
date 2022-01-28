@@ -1,3 +1,2 @@
-build/domkit-sample.hl
-build/domkit-sample.js
-res/.tmp/cache.dat
+res/.tmp
+build
