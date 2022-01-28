@@ -23,6 +23,7 @@ class Screen1Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 		initComponent();
 		nested1.addChild(new NestedComp(5));
 		toggleClass.onClick = () -> resizeNested.dom.toggleClass("big");
+		filterClass.onClick = () -> filteredNested.dom.toggleClass("filtered");
 		addComponent.onClick = () -> {
 			final n = new NestedComp(5);
 			nested4.addChild(n);

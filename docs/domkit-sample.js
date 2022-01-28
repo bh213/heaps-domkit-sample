@@ -1064,7 +1064,7 @@ $hxClasses["h2d.domkit.Object"] = h2d_domkit_Object;
 h2d_domkit_Object.__name__ = "h2d.domkit.Object";
 h2d_domkit_Object.__isInterface__ = true;
 var DomkitRootComp = function(parent) {
-	this.currentScreenIndex = 3;
+	this.currentScreenIndex = 0;
 	this.screens = [];
 	var _gthis = this;
 	h2d_Object.call(this,parent);
@@ -6901,6 +6901,9 @@ var screens_Screen1Comp = function(parent) {
 	this.nested1.addChild(new screens_NestedComp(5));
 	this.toggleClass.onClick = function() {
 		_gthis.resizeNested.dom.toggleClass("big");
+	};
+	this.filterClass.onClick = function() {
+		_gthis.filteredNested.dom.toggleClass("filtered");
 	};
 	this.addComponent.onClick = function() {
 		var n = new screens_NestedComp(5);

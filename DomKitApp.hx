@@ -16,7 +16,7 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 	</domkitRoot>;
 
 	var screens:Array<BaseScreen> = [];
-	var currentScreenIndex = 3;
+	var currentScreenIndex = 0;
 	public function new(?parent) {
 		super(parent);
 
@@ -35,8 +35,6 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 			currentScreenIndex = (currentScreenIndex + screens.length - 1) % screens.length;
 			updateScreens();
 		}
-		
-		
 	}
 
 	function updateScreens() {
@@ -46,11 +44,6 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 		titleText.text = 'Screen ${currentScreenIndex+1}: ${screens[currentScreenIndex].getTitle()}';
 	}
 }
-
-
-
-
-
 
 
 @:uiComp("button")

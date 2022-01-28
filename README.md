@@ -24,6 +24,8 @@ This repo contains samples for [Heaps](https://github.com/HeapsIO/heaps) [DomKit
 * styling flows
 
 
+## HTML version
+HTML build is hosted on [GitHub pages](https://bh213.github.io/heaps-domkit-sample/)
 
 
 
