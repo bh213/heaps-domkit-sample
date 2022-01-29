@@ -44,7 +44,14 @@
     y:480;
 }
 
-
+.grid-holder {
+    max-width: 256;
+    min-width: 256;
+    max-height:192;
+    layout:vertical;
+    vspacing:10;
+    multiline:true;
+}
 
 .grid-center-text {
     max-width:256;
@@ -324,3 +331,56 @@ flowItem {
     scale:4;
     background:gray;
 } */
+
+/* Screen 5 */
+
+num {
+    background:gray;
+    layout:vertical;
+    
+}
+
+tx {
+    background:gray;
+    layout:vertical;
+    
+}
+num text {
+    color:#ccc;
+}
+#id1 num num num text {
+    color:#2F2;
+}
+
+#id2 > num > num > num > text {
+    color:#2F2;
+}
+
+
+#id3 > num > text{
+    color:#2F2;
+}
+
+#id4 num  text {
+    color:#2F2;
+}
+
+#id5 num num *:even text {
+    color:#2F2;
+}
+
+#id6 .A .B .C text{
+    color:#2F2;
+}
+
+#id7 .A .B .C.D text{
+    color:#2F2;
+}
+
+#id8  tx  tx .C text{
+    color:#2F2;
+}
+
+#id9  tx.C {
+    background:#2F2 0.5;
+}

@@ -24,6 +24,7 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 		screens.push(new Screen2Comp(this));
 		screens.push(new Screen3Comp(this));
 		screens.push(new Screen4Comp(this));
+		screens.push(new Screen5Comp(this));
 		initComponent();
 		updateScreens();
 		
