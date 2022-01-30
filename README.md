@@ -22,13 +22,16 @@ This repo contains samples for [Heaps](https://github.com/HeapsIO/heaps) [DomKit
 * CSS pseudo-classes
 * dynamically adding and removing components
 * styling flows
+* documented domkit inspection mode (text at the bottom of the screen)
 
 
 ## HTML version
 HTML build is hosted on [GitHub pages](https://bh213.github.io/heaps-domkit-sample/)
 
 
+## Disclaimer
 
+DomKit is not really well documented and is lacking example code (hence this repo) so be aware that code here might not be follow the best practices or could even be completely wrong.
 
 ### Attribution
 

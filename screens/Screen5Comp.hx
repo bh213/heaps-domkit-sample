@@ -178,14 +178,12 @@ class TxMyComponent extends h2d.Flow implements h2d.domkit.Object {
 class SelectorMyComponent extends h2d.Flow implements h2d.domkit.Object {
 	static var SRC =
 	<selector>
-		<text text={text}/>
+		<text text={t}/>
 	</selector>;
 
-	public function new(text:String, ?parent) {
+	public function new(t:String, ?parent) {
 		super(parent);
 		initComponent();
-
-
 	}
 
 }

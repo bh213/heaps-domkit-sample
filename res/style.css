@@ -47,7 +47,7 @@
 .grid-holder {
     max-width: 256;
     min-width: 256;
-    max-height:192;
+    
     layout:vertical;
     vspacing:10;
     multiline:true;
@@ -334,6 +334,11 @@ flowItem {
 
 /* Screen 5 */
 
+selector text{
+
+    color:blue;
+}
+
 num {
     background:gray;
     layout:vertical;
@@ -383,4 +388,25 @@ num text {
 
 #id9  tx.C {
     background:#2F2 0.5;
+}
+
+#id10 num num num num:even text{ 
+    color:#2F2; 
+}
+
+#id10 num num num num:odd text{ 
+    color:#FF2; 
+}
+ 
+#id11 > num > num > text{ 
+    color:red; 
+}
+
+#id11 num num num text{ 
+    color:orange; 
+}
+
+
+#id12 num { 
+    background:blue 0.5;
 }

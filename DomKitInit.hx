@@ -9,6 +9,7 @@ class DomKitInit {
         // maps dom components. e.g. <nested> would look for NestedComp (default domkit config) OR NestedMyComponent
         domkit.Macros.registerComponentsPath("$MyComponent");
         domkit.Macros.registerComponentsPath("screens.$Comp");
+        domkit.Macros.registerComponentsPath("screens.$MyComponent");
         
         
         
