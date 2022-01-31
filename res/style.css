@@ -410,3 +410,11 @@ num text {
 #id12 num { 
     background:blue 0.5;
 }
+
+
+/* Screen 7 */
+#rect7 {
+    width:20;
+    height:60;
+    color:green;
+}

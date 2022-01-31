@@ -35,7 +35,7 @@ class Screen3Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 
 	
 	public function getTitle() {
-		return "dynamically removing DomComponents, :odd, :even, :first-child, :last-child pseudo-classes, custom CSS parsing (font)";
+		return "dynamically removing DomComponents, pseudo-classes, custom CSS parsing (font)";
 	}
 	public function getH2dObject() {
 		return this;

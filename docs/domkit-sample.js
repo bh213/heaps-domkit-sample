@@ -1074,6 +1074,7 @@ var DomkitRootComp = function(parent) {
 	this.screens.push(new screens_Screen4Comp(this));
 	this.screens.push(new screens_Screen5Comp(this));
 	this.screens.push(new screens_Screen6Comp(this));
+	this.screens.push(new screens_Screen7Comp(this));
 	var tmp = this.dom;
 	if(tmp == null) {
 		tmp = domkit_Properties.create("domkitRoot",this,null);
@@ -7046,7 +7047,7 @@ screens_Screen3Comp.__interfaces__ = [h2d_domkit_Object,screens_BaseScreen];
 screens_Screen3Comp.__super__ = h2d_Object;
 screens_Screen3Comp.prototype = $extend(h2d_Object.prototype,{
 	getTitle: function() {
-		return "dynamically removing DomComponents, :odd, :even, :first-child, :last-child pseudo-classes, custom CSS parsing (font)";
+		return "dynamically removing DomComponents, pseudo-classes, custom CSS parsing (font)";
 	}
 	,getH2dObject: function() {
 		return this;
@@ -7260,7 +7261,7 @@ var screens_Screen6Comp = function(parent) {
 	this.addNumButton10 = tmp2.obj;
 	var tmp2 = domkit_Properties.createNew("button",tmp1,["remove first <num(4)>"],{ id : "delNumButton10"});
 	this.delNumButton10 = tmp2.obj;
-	var tmp2 = domkit_Properties.createNew("selector",tmp1,["#id10 num num num num:even text    and :odd"],null);
+	var tmp2 = domkit_Properties.createNew("selector",tmp1,["#id10 num num num num:even text<br/>and :odd<br/> dynamic adding/removing <font color=\"#f00\">NOT</font> supported at the moment"],null);
 	var tmp2 = domkit_Properties.createNew("num",tmp1,[1],null);
 	var tmp1 = domkit_Properties.createNew("num",tmp2,[2],null);
 	var tmp2 = domkit_Properties.createNew("num",tmp1,[3],{ id : "parent10"});
@@ -7439,6 +7440,36 @@ h2d_Layers.prototype = $extend(h2d_Object.prototype,{
 		}
 	}
 	,__class__: h2d_Layers
+});
+var screens_Screen7Comp = function(parent) {
+	h2d_Object.call(this,parent);
+	var tmp = this.dom;
+	if(tmp == null) {
+		tmp = domkit_Properties.create("screen7",this,null);
+		this.dom = tmp;
+	} else {
+		tmp.component = domkit_Component.get("screen7");
+	}
+	var tmp1 = domkit_Properties.createNew("flow",tmp,[],{ 'class' : "grid-holder grid-top-1"});
+	var tmp2 = domkit_Properties.createNew("rect",tmp1,[],null);
+	var tmp1 = domkit_Properties.createNew("flow",tmp,[],{ 'class' : "grid-holder grid-top-2"});
+	var tmp2 = domkit_Properties.createNew("rect",tmp1,[],{ width : "50", height : "50", color : "red"});
+	var tmp1 = domkit_Properties.createNew("flow",tmp,[],{ 'class' : "grid-holder grid-top-3"});
+	var tmp = domkit_Properties.createNew("rect",tmp1,[],{ id : "rect7"});
+	this.rect7 = tmp.obj;
+};
+$hxClasses["screens.Screen7Comp"] = screens_Screen7Comp;
+screens_Screen7Comp.__name__ = "screens.Screen7Comp";
+screens_Screen7Comp.__interfaces__ = [h2d_domkit_Object,screens_BaseScreen];
+screens_Screen7Comp.__super__ = h2d_Object;
+screens_Screen7Comp.prototype = $extend(h2d_Object.prototype,{
+	getTitle: function() {
+		return "creating components using @:domkitDecl - see code";
+	}
+	,getH2dObject: function() {
+		return this;
+	}
+	,__class__: screens_Screen7Comp
 });
 var domkit_CompDomkitRoot = function() {
 	domkit_Component.call(this,"domkitRoot",function(_,parent) {
@@ -10751,6 +10782,1737 @@ domkit_CompNum.__super__ = domkit_Component;
 domkit_CompNum.prototype = $extend(domkit_Component.prototype,{
 	__class__: domkit_CompNum
 });
+var screens_Rectange = function(parent) {
+	this.redraw = true;
+	h2d_Object.call(this,parent);
+	this.graphics = new h2d_Graphics(parent);
+	this.set_width(100);
+	this.set_height(100);
+	this.set_color(-1);
+	this.redraw = true;
+};
+$hxClasses["screens.Rectange"] = screens_Rectange;
+screens_Rectange.__name__ = "screens.Rectange";
+screens_Rectange.__super__ = h2d_Object;
+screens_Rectange.prototype = $extend(h2d_Object.prototype,{
+	set_height: function(height) {
+		this.height = height;
+		this.redraw = true;
+		return this.height;
+	}
+	,set_width: function(width) {
+		this.width = width;
+		this.redraw = true;
+		return this.width;
+	}
+	,set_color: function(color) {
+		this.color = color;
+		this.redraw = true;
+		return this.color;
+	}
+	,update: function() {
+		this.graphics.clear();
+		var _this = this.graphics;
+		var color = this.color;
+		_this.curA = 1.;
+		_this.curR = (color >> 16 & 255) / 255.;
+		_this.curG = (color >> 8 & 255) / 255.;
+		_this.curB = (color & 255) / 255.;
+		this.graphics.beginFill(this.color,1);
+		this.graphics.drawRect(0,0,this.width,this.height);
+		this.graphics.endFill();
+		this.redraw = false;
+	}
+	,sync: function(ctx) {
+		h2d_Object.prototype.sync.call(this,ctx);
+		if(this.redraw) {
+			this.update();
+		}
+	}
+	,__class__: screens_Rectange
+});
+var h2d_Graphics = function(parent) {
+	this.bevel = 0.25;
+	this.my = 0.;
+	this.mx = 0.;
+	this.md = 1.;
+	this.mc = 0.;
+	this.mb = 0.;
+	this.ma = 1.;
+	h2d_Drawable.call(this,parent);
+	this.content = new h2d__$Graphics_GraphicsContent();
+	this.tile = h2d_Tile.fromColor(16777215);
+	this.clear();
+};
+$hxClasses["h2d.Graphics"] = h2d_Graphics;
+h2d_Graphics.__name__ = "h2d.Graphics";
+h2d_Graphics.__super__ = h2d_Drawable;
+h2d_Graphics.prototype = $extend(h2d_Drawable.prototype,{
+	onRemove: function() {
+		h2d_Drawable.prototype.onRemove.call(this);
+		this.clear();
+	}
+	,clear: function() {
+		this.content.clear();
+		this.tmpPoints = [];
+		this.pindex = 0;
+		this.lineSize = 0;
+		this.xMin = Infinity;
+		this.yMin = Infinity;
+		this.yMax = -Infinity;
+		this.xMax = -Infinity;
+	}
+	,getBoundsRec: function(relativeTo,out,forSize) {
+		h2d_Drawable.prototype.getBoundsRec.call(this,relativeTo,out,forSize);
+		if(this.tile != null) {
+			this.addBounds(relativeTo,out,this.xMin,this.yMin,this.xMax - this.xMin,this.yMax - this.yMin);
+		}
+	}
+	,isConvex: function(points) {
+		var first = true;
+		var sign = false;
+		var _g = 0;
+		var _g1 = points.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var p1 = points[i];
+			var p2 = points[(i + 1) % points.length];
+			var p3 = points[(i + 2) % points.length];
+			var s = (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x) > 0;
+			if(first) {
+				first = false;
+				sign = s;
+			} else if(sign != s) {
+				return false;
+			}
+		}
+		return true;
+	}
+	,flushLine: function(start) {
+		var pts = this.tmpPoints;
+		var last = pts.length - 1;
+		var prev = pts[last];
+		var p = pts[0];
+		this.content.setTile(h2d_Tile.fromColor(16777215));
+		var closed = p.x == prev.x && p.y == prev.y;
+		var count = pts.length;
+		if(!closed) {
+			var prevLast = pts[last - 1];
+			if(prevLast == null) {
+				prevLast = p;
+			}
+			var gp = new h2d_GPoint();
+			gp.load(prev.x * 2 - prevLast.x,prev.y * 2 - prevLast.y,0,0,0,0);
+			pts.push(gp);
+			var pNext = pts[1];
+			if(pNext == null) {
+				pNext = p;
+			}
+			var gp = new h2d_GPoint();
+			gp.load(p.x * 2 - pNext.x,p.y * 2 - pNext.y,0,0,0,0);
+			prev = gp;
+		} else if(p != prev) {
+			--count;
+			--last;
+			prev = pts[last];
+		}
+		var _g = 0;
+		var _g1 = count;
+		while(_g < _g1) {
+			var i = _g++;
+			var next = pts[(i + 1) % pts.length];
+			var nx1 = prev.y - p.y;
+			var ny1 = p.x - prev.x;
+			var ns1 = 1. / Math.sqrt(nx1 * nx1 + ny1 * ny1);
+			var nx2 = p.y - next.y;
+			var ny2 = next.x - p.x;
+			var ns2 = 1. / Math.sqrt(nx2 * nx2 + ny2 * ny2);
+			var nx = nx1 * ns1 + nx2 * ns2;
+			var ny = ny1 * ns1 + ny2 * ns2;
+			var ns = 1. / Math.sqrt(nx * nx + ny * ny);
+			nx *= ns;
+			ny *= ns;
+			var size = nx * nx1 * ns1 + ny * ny1 * ns1;
+			if(size < 0.1) {
+				size = 0.1;
+			}
+			var d = this.lineSize * 0.5 / size;
+			nx *= d;
+			ny *= d;
+			if(size > this.bevel) {
+				var _this = this.content;
+				var x = p.x + nx;
+				var y = p.y + ny;
+				var r = p.r;
+				var g = p.g;
+				var b = p.b;
+				var a = p.a;
+				var this1 = _this.tmp;
+				if(this1.pos == this1.array.length) {
+					var newSize = this1.array.length << 1;
+					if(newSize < 128) {
+						newSize = 128;
+					}
+					var newArray = new Float32Array(newSize);
+					newArray.set(this1.array);
+					this1.array = newArray;
+				}
+				this1.array[this1.pos++] = x;
+				var this2 = _this.tmp;
+				if(this2.pos == this2.array.length) {
+					var newSize1 = this2.array.length << 1;
+					if(newSize1 < 128) {
+						newSize1 = 128;
+					}
+					var newArray1 = new Float32Array(newSize1);
+					newArray1.set(this2.array);
+					this2.array = newArray1;
+				}
+				this2.array[this2.pos++] = y;
+				var this3 = _this.tmp;
+				if(this3.pos == this3.array.length) {
+					var newSize2 = this3.array.length << 1;
+					if(newSize2 < 128) {
+						newSize2 = 128;
+					}
+					var newArray2 = new Float32Array(newSize2);
+					newArray2.set(this3.array);
+					this3.array = newArray2;
+				}
+				this3.array[this3.pos++] = 0;
+				var this4 = _this.tmp;
+				if(this4.pos == this4.array.length) {
+					var newSize3 = this4.array.length << 1;
+					if(newSize3 < 128) {
+						newSize3 = 128;
+					}
+					var newArray3 = new Float32Array(newSize3);
+					newArray3.set(this4.array);
+					this4.array = newArray3;
+				}
+				this4.array[this4.pos++] = 0;
+				var this5 = _this.tmp;
+				if(this5.pos == this5.array.length) {
+					var newSize4 = this5.array.length << 1;
+					if(newSize4 < 128) {
+						newSize4 = 128;
+					}
+					var newArray4 = new Float32Array(newSize4);
+					newArray4.set(this5.array);
+					this5.array = newArray4;
+				}
+				this5.array[this5.pos++] = r;
+				var this6 = _this.tmp;
+				if(this6.pos == this6.array.length) {
+					var newSize5 = this6.array.length << 1;
+					if(newSize5 < 128) {
+						newSize5 = 128;
+					}
+					var newArray5 = new Float32Array(newSize5);
+					newArray5.set(this6.array);
+					this6.array = newArray5;
+				}
+				this6.array[this6.pos++] = g;
+				var this7 = _this.tmp;
+				if(this7.pos == this7.array.length) {
+					var newSize6 = this7.array.length << 1;
+					if(newSize6 < 128) {
+						newSize6 = 128;
+					}
+					var newArray6 = new Float32Array(newSize6);
+					newArray6.set(this7.array);
+					this7.array = newArray6;
+				}
+				this7.array[this7.pos++] = b;
+				var this8 = _this.tmp;
+				if(this8.pos == this8.array.length) {
+					var newSize7 = this8.array.length << 1;
+					if(newSize7 < 128) {
+						newSize7 = 128;
+					}
+					var newArray7 = new Float32Array(newSize7);
+					newArray7.set(this8.array);
+					this8.array = newArray7;
+				}
+				this8.array[this8.pos++] = a;
+				_this.bufferDirty = true;
+				var _this1 = this.content;
+				var x1 = p.x - nx;
+				var y1 = p.y - ny;
+				var r1 = p.r;
+				var g1 = p.g;
+				var b1 = p.b;
+				var a1 = p.a;
+				var this9 = _this1.tmp;
+				if(this9.pos == this9.array.length) {
+					var newSize8 = this9.array.length << 1;
+					if(newSize8 < 128) {
+						newSize8 = 128;
+					}
+					var newArray8 = new Float32Array(newSize8);
+					newArray8.set(this9.array);
+					this9.array = newArray8;
+				}
+				this9.array[this9.pos++] = x1;
+				var this10 = _this1.tmp;
+				if(this10.pos == this10.array.length) {
+					var newSize9 = this10.array.length << 1;
+					if(newSize9 < 128) {
+						newSize9 = 128;
+					}
+					var newArray9 = new Float32Array(newSize9);
+					newArray9.set(this10.array);
+					this10.array = newArray9;
+				}
+				this10.array[this10.pos++] = y1;
+				var this11 = _this1.tmp;
+				if(this11.pos == this11.array.length) {
+					var newSize10 = this11.array.length << 1;
+					if(newSize10 < 128) {
+						newSize10 = 128;
+					}
+					var newArray10 = new Float32Array(newSize10);
+					newArray10.set(this11.array);
+					this11.array = newArray10;
+				}
+				this11.array[this11.pos++] = 0;
+				var this12 = _this1.tmp;
+				if(this12.pos == this12.array.length) {
+					var newSize11 = this12.array.length << 1;
+					if(newSize11 < 128) {
+						newSize11 = 128;
+					}
+					var newArray11 = new Float32Array(newSize11);
+					newArray11.set(this12.array);
+					this12.array = newArray11;
+				}
+				this12.array[this12.pos++] = 0;
+				var this13 = _this1.tmp;
+				if(this13.pos == this13.array.length) {
+					var newSize12 = this13.array.length << 1;
+					if(newSize12 < 128) {
+						newSize12 = 128;
+					}
+					var newArray12 = new Float32Array(newSize12);
+					newArray12.set(this13.array);
+					this13.array = newArray12;
+				}
+				this13.array[this13.pos++] = r1;
+				var this14 = _this1.tmp;
+				if(this14.pos == this14.array.length) {
+					var newSize13 = this14.array.length << 1;
+					if(newSize13 < 128) {
+						newSize13 = 128;
+					}
+					var newArray13 = new Float32Array(newSize13);
+					newArray13.set(this14.array);
+					this14.array = newArray13;
+				}
+				this14.array[this14.pos++] = g1;
+				var this15 = _this1.tmp;
+				if(this15.pos == this15.array.length) {
+					var newSize14 = this15.array.length << 1;
+					if(newSize14 < 128) {
+						newSize14 = 128;
+					}
+					var newArray14 = new Float32Array(newSize14);
+					newArray14.set(this15.array);
+					this15.array = newArray14;
+				}
+				this15.array[this15.pos++] = b1;
+				var this16 = _this1.tmp;
+				if(this16.pos == this16.array.length) {
+					var newSize15 = this16.array.length << 1;
+					if(newSize15 < 128) {
+						newSize15 = 128;
+					}
+					var newArray15 = new Float32Array(newSize15);
+					newArray15.set(this16.array);
+					this16.array = newArray15;
+				}
+				this16.array[this16.pos++] = a1;
+				_this1.bufferDirty = true;
+				var pnext = i == last ? start : this.pindex + 2;
+				if(i < count - 1 || closed) {
+					var _this2 = this.content;
+					_this2.index.push(this.pindex);
+					var _this3 = _this2.state;
+					_this3.tail.count += 1;
+					_this3.totalCount += 1;
+					_this2.indexDirty = true;
+					var _this4 = this.content;
+					_this4.index.push(this.pindex + 1);
+					var _this5 = _this4.state;
+					_this5.tail.count += 1;
+					_this5.totalCount += 1;
+					_this4.indexDirty = true;
+					var _this6 = this.content;
+					_this6.index.push(pnext);
+					var _this7 = _this6.state;
+					_this7.tail.count += 1;
+					_this7.totalCount += 1;
+					_this6.indexDirty = true;
+					var _this8 = this.content;
+					_this8.index.push(this.pindex + 1);
+					var _this9 = _this8.state;
+					_this9.tail.count += 1;
+					_this9.totalCount += 1;
+					_this8.indexDirty = true;
+					var _this10 = this.content;
+					_this10.index.push(pnext);
+					var _this11 = _this10.state;
+					_this11.tail.count += 1;
+					_this11.totalCount += 1;
+					_this10.indexDirty = true;
+					var _this12 = this.content;
+					_this12.index.push(pnext + 1);
+					var _this13 = _this12.state;
+					_this13.tail.count += 1;
+					_this13.totalCount += 1;
+					_this12.indexDirty = true;
+				}
+				this.pindex += 2;
+			} else {
+				var n0x = next.x - p.x;
+				var n0y = next.y - p.y;
+				var sign = n0x * nx + n0y * ny;
+				var nnx = -ny;
+				var nny = nx;
+				var size1 = nnx * nx1 * ns1 + nny * ny1 * ns1;
+				var d1 = this.lineSize * 0.5 / size1;
+				nnx *= d1;
+				nny *= d1;
+				var pnext1 = i == last ? start : this.pindex + 3;
+				if(sign > 0) {
+					var _this14 = this.content;
+					var x2 = p.x + nx;
+					var y2 = p.y + ny;
+					var r2 = p.r;
+					var g2 = p.g;
+					var b2 = p.b;
+					var a2 = p.a;
+					var this17 = _this14.tmp;
+					if(this17.pos == this17.array.length) {
+						var newSize16 = this17.array.length << 1;
+						if(newSize16 < 128) {
+							newSize16 = 128;
+						}
+						var newArray16 = new Float32Array(newSize16);
+						newArray16.set(this17.array);
+						this17.array = newArray16;
+					}
+					this17.array[this17.pos++] = x2;
+					var this18 = _this14.tmp;
+					if(this18.pos == this18.array.length) {
+						var newSize17 = this18.array.length << 1;
+						if(newSize17 < 128) {
+							newSize17 = 128;
+						}
+						var newArray17 = new Float32Array(newSize17);
+						newArray17.set(this18.array);
+						this18.array = newArray17;
+					}
+					this18.array[this18.pos++] = y2;
+					var this19 = _this14.tmp;
+					if(this19.pos == this19.array.length) {
+						var newSize18 = this19.array.length << 1;
+						if(newSize18 < 128) {
+							newSize18 = 128;
+						}
+						var newArray18 = new Float32Array(newSize18);
+						newArray18.set(this19.array);
+						this19.array = newArray18;
+					}
+					this19.array[this19.pos++] = 0;
+					var this20 = _this14.tmp;
+					if(this20.pos == this20.array.length) {
+						var newSize19 = this20.array.length << 1;
+						if(newSize19 < 128) {
+							newSize19 = 128;
+						}
+						var newArray19 = new Float32Array(newSize19);
+						newArray19.set(this20.array);
+						this20.array = newArray19;
+					}
+					this20.array[this20.pos++] = 0;
+					var this21 = _this14.tmp;
+					if(this21.pos == this21.array.length) {
+						var newSize20 = this21.array.length << 1;
+						if(newSize20 < 128) {
+							newSize20 = 128;
+						}
+						var newArray20 = new Float32Array(newSize20);
+						newArray20.set(this21.array);
+						this21.array = newArray20;
+					}
+					this21.array[this21.pos++] = r2;
+					var this22 = _this14.tmp;
+					if(this22.pos == this22.array.length) {
+						var newSize21 = this22.array.length << 1;
+						if(newSize21 < 128) {
+							newSize21 = 128;
+						}
+						var newArray21 = new Float32Array(newSize21);
+						newArray21.set(this22.array);
+						this22.array = newArray21;
+					}
+					this22.array[this22.pos++] = g2;
+					var this23 = _this14.tmp;
+					if(this23.pos == this23.array.length) {
+						var newSize22 = this23.array.length << 1;
+						if(newSize22 < 128) {
+							newSize22 = 128;
+						}
+						var newArray22 = new Float32Array(newSize22);
+						newArray22.set(this23.array);
+						this23.array = newArray22;
+					}
+					this23.array[this23.pos++] = b2;
+					var this24 = _this14.tmp;
+					if(this24.pos == this24.array.length) {
+						var newSize23 = this24.array.length << 1;
+						if(newSize23 < 128) {
+							newSize23 = 128;
+						}
+						var newArray23 = new Float32Array(newSize23);
+						newArray23.set(this24.array);
+						this24.array = newArray23;
+					}
+					this24.array[this24.pos++] = a2;
+					_this14.bufferDirty = true;
+					var _this15 = this.content;
+					var x3 = p.x - nnx;
+					var y3 = p.y - nny;
+					var r3 = p.r;
+					var g3 = p.g;
+					var b3 = p.b;
+					var a3 = p.a;
+					var this25 = _this15.tmp;
+					if(this25.pos == this25.array.length) {
+						var newSize24 = this25.array.length << 1;
+						if(newSize24 < 128) {
+							newSize24 = 128;
+						}
+						var newArray24 = new Float32Array(newSize24);
+						newArray24.set(this25.array);
+						this25.array = newArray24;
+					}
+					this25.array[this25.pos++] = x3;
+					var this26 = _this15.tmp;
+					if(this26.pos == this26.array.length) {
+						var newSize25 = this26.array.length << 1;
+						if(newSize25 < 128) {
+							newSize25 = 128;
+						}
+						var newArray25 = new Float32Array(newSize25);
+						newArray25.set(this26.array);
+						this26.array = newArray25;
+					}
+					this26.array[this26.pos++] = y3;
+					var this27 = _this15.tmp;
+					if(this27.pos == this27.array.length) {
+						var newSize26 = this27.array.length << 1;
+						if(newSize26 < 128) {
+							newSize26 = 128;
+						}
+						var newArray26 = new Float32Array(newSize26);
+						newArray26.set(this27.array);
+						this27.array = newArray26;
+					}
+					this27.array[this27.pos++] = 0;
+					var this28 = _this15.tmp;
+					if(this28.pos == this28.array.length) {
+						var newSize27 = this28.array.length << 1;
+						if(newSize27 < 128) {
+							newSize27 = 128;
+						}
+						var newArray27 = new Float32Array(newSize27);
+						newArray27.set(this28.array);
+						this28.array = newArray27;
+					}
+					this28.array[this28.pos++] = 0;
+					var this29 = _this15.tmp;
+					if(this29.pos == this29.array.length) {
+						var newSize28 = this29.array.length << 1;
+						if(newSize28 < 128) {
+							newSize28 = 128;
+						}
+						var newArray28 = new Float32Array(newSize28);
+						newArray28.set(this29.array);
+						this29.array = newArray28;
+					}
+					this29.array[this29.pos++] = r3;
+					var this30 = _this15.tmp;
+					if(this30.pos == this30.array.length) {
+						var newSize29 = this30.array.length << 1;
+						if(newSize29 < 128) {
+							newSize29 = 128;
+						}
+						var newArray29 = new Float32Array(newSize29);
+						newArray29.set(this30.array);
+						this30.array = newArray29;
+					}
+					this30.array[this30.pos++] = g3;
+					var this31 = _this15.tmp;
+					if(this31.pos == this31.array.length) {
+						var newSize30 = this31.array.length << 1;
+						if(newSize30 < 128) {
+							newSize30 = 128;
+						}
+						var newArray30 = new Float32Array(newSize30);
+						newArray30.set(this31.array);
+						this31.array = newArray30;
+					}
+					this31.array[this31.pos++] = b3;
+					var this32 = _this15.tmp;
+					if(this32.pos == this32.array.length) {
+						var newSize31 = this32.array.length << 1;
+						if(newSize31 < 128) {
+							newSize31 = 128;
+						}
+						var newArray31 = new Float32Array(newSize31);
+						newArray31.set(this32.array);
+						this32.array = newArray31;
+					}
+					this32.array[this32.pos++] = a3;
+					_this15.bufferDirty = true;
+					var _this16 = this.content;
+					var x4 = p.x + nnx;
+					var y4 = p.y + nny;
+					var r4 = p.r;
+					var g4 = p.g;
+					var b4 = p.b;
+					var a4 = p.a;
+					var this33 = _this16.tmp;
+					if(this33.pos == this33.array.length) {
+						var newSize32 = this33.array.length << 1;
+						if(newSize32 < 128) {
+							newSize32 = 128;
+						}
+						var newArray32 = new Float32Array(newSize32);
+						newArray32.set(this33.array);
+						this33.array = newArray32;
+					}
+					this33.array[this33.pos++] = x4;
+					var this34 = _this16.tmp;
+					if(this34.pos == this34.array.length) {
+						var newSize33 = this34.array.length << 1;
+						if(newSize33 < 128) {
+							newSize33 = 128;
+						}
+						var newArray33 = new Float32Array(newSize33);
+						newArray33.set(this34.array);
+						this34.array = newArray33;
+					}
+					this34.array[this34.pos++] = y4;
+					var this35 = _this16.tmp;
+					if(this35.pos == this35.array.length) {
+						var newSize34 = this35.array.length << 1;
+						if(newSize34 < 128) {
+							newSize34 = 128;
+						}
+						var newArray34 = new Float32Array(newSize34);
+						newArray34.set(this35.array);
+						this35.array = newArray34;
+					}
+					this35.array[this35.pos++] = 0;
+					var this36 = _this16.tmp;
+					if(this36.pos == this36.array.length) {
+						var newSize35 = this36.array.length << 1;
+						if(newSize35 < 128) {
+							newSize35 = 128;
+						}
+						var newArray35 = new Float32Array(newSize35);
+						newArray35.set(this36.array);
+						this36.array = newArray35;
+					}
+					this36.array[this36.pos++] = 0;
+					var this37 = _this16.tmp;
+					if(this37.pos == this37.array.length) {
+						var newSize36 = this37.array.length << 1;
+						if(newSize36 < 128) {
+							newSize36 = 128;
+						}
+						var newArray36 = new Float32Array(newSize36);
+						newArray36.set(this37.array);
+						this37.array = newArray36;
+					}
+					this37.array[this37.pos++] = r4;
+					var this38 = _this16.tmp;
+					if(this38.pos == this38.array.length) {
+						var newSize37 = this38.array.length << 1;
+						if(newSize37 < 128) {
+							newSize37 = 128;
+						}
+						var newArray37 = new Float32Array(newSize37);
+						newArray37.set(this38.array);
+						this38.array = newArray37;
+					}
+					this38.array[this38.pos++] = g4;
+					var this39 = _this16.tmp;
+					if(this39.pos == this39.array.length) {
+						var newSize38 = this39.array.length << 1;
+						if(newSize38 < 128) {
+							newSize38 = 128;
+						}
+						var newArray38 = new Float32Array(newSize38);
+						newArray38.set(this39.array);
+						this39.array = newArray38;
+					}
+					this39.array[this39.pos++] = b4;
+					var this40 = _this16.tmp;
+					if(this40.pos == this40.array.length) {
+						var newSize39 = this40.array.length << 1;
+						if(newSize39 < 128) {
+							newSize39 = 128;
+						}
+						var newArray39 = new Float32Array(newSize39);
+						newArray39.set(this40.array);
+						this40.array = newArray39;
+					}
+					this40.array[this40.pos++] = a4;
+					_this16.bufferDirty = true;
+					var _this17 = this.content;
+					_this17.index.push(this.pindex);
+					var _this18 = _this17.state;
+					_this18.tail.count += 1;
+					_this18.totalCount += 1;
+					_this17.indexDirty = true;
+					var _this19 = this.content;
+					_this19.index.push(pnext1);
+					var _this20 = _this19.state;
+					_this20.tail.count += 1;
+					_this20.totalCount += 1;
+					_this19.indexDirty = true;
+					var _this21 = this.content;
+					_this21.index.push(this.pindex + 2);
+					var _this22 = _this21.state;
+					_this22.tail.count += 1;
+					_this22.totalCount += 1;
+					_this21.indexDirty = true;
+					var _this23 = this.content;
+					_this23.index.push(this.pindex + 2);
+					var _this24 = _this23.state;
+					_this24.tail.count += 1;
+					_this24.totalCount += 1;
+					_this23.indexDirty = true;
+					var _this25 = this.content;
+					_this25.index.push(pnext1);
+					var _this26 = _this25.state;
+					_this26.tail.count += 1;
+					_this26.totalCount += 1;
+					_this25.indexDirty = true;
+					var _this27 = this.content;
+					_this27.index.push(pnext1 + 1);
+					var _this28 = _this27.state;
+					_this28.tail.count += 1;
+					_this28.totalCount += 1;
+					_this27.indexDirty = true;
+				} else {
+					var _this29 = this.content;
+					var x5 = p.x + nnx;
+					var y5 = p.y + nny;
+					var r5 = p.r;
+					var g5 = p.g;
+					var b5 = p.b;
+					var a5 = p.a;
+					var this41 = _this29.tmp;
+					if(this41.pos == this41.array.length) {
+						var newSize40 = this41.array.length << 1;
+						if(newSize40 < 128) {
+							newSize40 = 128;
+						}
+						var newArray40 = new Float32Array(newSize40);
+						newArray40.set(this41.array);
+						this41.array = newArray40;
+					}
+					this41.array[this41.pos++] = x5;
+					var this42 = _this29.tmp;
+					if(this42.pos == this42.array.length) {
+						var newSize41 = this42.array.length << 1;
+						if(newSize41 < 128) {
+							newSize41 = 128;
+						}
+						var newArray41 = new Float32Array(newSize41);
+						newArray41.set(this42.array);
+						this42.array = newArray41;
+					}
+					this42.array[this42.pos++] = y5;
+					var this43 = _this29.tmp;
+					if(this43.pos == this43.array.length) {
+						var newSize42 = this43.array.length << 1;
+						if(newSize42 < 128) {
+							newSize42 = 128;
+						}
+						var newArray42 = new Float32Array(newSize42);
+						newArray42.set(this43.array);
+						this43.array = newArray42;
+					}
+					this43.array[this43.pos++] = 0;
+					var this44 = _this29.tmp;
+					if(this44.pos == this44.array.length) {
+						var newSize43 = this44.array.length << 1;
+						if(newSize43 < 128) {
+							newSize43 = 128;
+						}
+						var newArray43 = new Float32Array(newSize43);
+						newArray43.set(this44.array);
+						this44.array = newArray43;
+					}
+					this44.array[this44.pos++] = 0;
+					var this45 = _this29.tmp;
+					if(this45.pos == this45.array.length) {
+						var newSize44 = this45.array.length << 1;
+						if(newSize44 < 128) {
+							newSize44 = 128;
+						}
+						var newArray44 = new Float32Array(newSize44);
+						newArray44.set(this45.array);
+						this45.array = newArray44;
+					}
+					this45.array[this45.pos++] = r5;
+					var this46 = _this29.tmp;
+					if(this46.pos == this46.array.length) {
+						var newSize45 = this46.array.length << 1;
+						if(newSize45 < 128) {
+							newSize45 = 128;
+						}
+						var newArray45 = new Float32Array(newSize45);
+						newArray45.set(this46.array);
+						this46.array = newArray45;
+					}
+					this46.array[this46.pos++] = g5;
+					var this47 = _this29.tmp;
+					if(this47.pos == this47.array.length) {
+						var newSize46 = this47.array.length << 1;
+						if(newSize46 < 128) {
+							newSize46 = 128;
+						}
+						var newArray46 = new Float32Array(newSize46);
+						newArray46.set(this47.array);
+						this47.array = newArray46;
+					}
+					this47.array[this47.pos++] = b5;
+					var this48 = _this29.tmp;
+					if(this48.pos == this48.array.length) {
+						var newSize47 = this48.array.length << 1;
+						if(newSize47 < 128) {
+							newSize47 = 128;
+						}
+						var newArray47 = new Float32Array(newSize47);
+						newArray47.set(this48.array);
+						this48.array = newArray47;
+					}
+					this48.array[this48.pos++] = a5;
+					_this29.bufferDirty = true;
+					var _this30 = this.content;
+					var x6 = p.x - nx;
+					var y6 = p.y - ny;
+					var r6 = p.r;
+					var g6 = p.g;
+					var b6 = p.b;
+					var a6 = p.a;
+					var this49 = _this30.tmp;
+					if(this49.pos == this49.array.length) {
+						var newSize48 = this49.array.length << 1;
+						if(newSize48 < 128) {
+							newSize48 = 128;
+						}
+						var newArray48 = new Float32Array(newSize48);
+						newArray48.set(this49.array);
+						this49.array = newArray48;
+					}
+					this49.array[this49.pos++] = x6;
+					var this50 = _this30.tmp;
+					if(this50.pos == this50.array.length) {
+						var newSize49 = this50.array.length << 1;
+						if(newSize49 < 128) {
+							newSize49 = 128;
+						}
+						var newArray49 = new Float32Array(newSize49);
+						newArray49.set(this50.array);
+						this50.array = newArray49;
+					}
+					this50.array[this50.pos++] = y6;
+					var this51 = _this30.tmp;
+					if(this51.pos == this51.array.length) {
+						var newSize50 = this51.array.length << 1;
+						if(newSize50 < 128) {
+							newSize50 = 128;
+						}
+						var newArray50 = new Float32Array(newSize50);
+						newArray50.set(this51.array);
+						this51.array = newArray50;
+					}
+					this51.array[this51.pos++] = 0;
+					var this52 = _this30.tmp;
+					if(this52.pos == this52.array.length) {
+						var newSize51 = this52.array.length << 1;
+						if(newSize51 < 128) {
+							newSize51 = 128;
+						}
+						var newArray51 = new Float32Array(newSize51);
+						newArray51.set(this52.array);
+						this52.array = newArray51;
+					}
+					this52.array[this52.pos++] = 0;
+					var this53 = _this30.tmp;
+					if(this53.pos == this53.array.length) {
+						var newSize52 = this53.array.length << 1;
+						if(newSize52 < 128) {
+							newSize52 = 128;
+						}
+						var newArray52 = new Float32Array(newSize52);
+						newArray52.set(this53.array);
+						this53.array = newArray52;
+					}
+					this53.array[this53.pos++] = r6;
+					var this54 = _this30.tmp;
+					if(this54.pos == this54.array.length) {
+						var newSize53 = this54.array.length << 1;
+						if(newSize53 < 128) {
+							newSize53 = 128;
+						}
+						var newArray53 = new Float32Array(newSize53);
+						newArray53.set(this54.array);
+						this54.array = newArray53;
+					}
+					this54.array[this54.pos++] = g6;
+					var this55 = _this30.tmp;
+					if(this55.pos == this55.array.length) {
+						var newSize54 = this55.array.length << 1;
+						if(newSize54 < 128) {
+							newSize54 = 128;
+						}
+						var newArray54 = new Float32Array(newSize54);
+						newArray54.set(this55.array);
+						this55.array = newArray54;
+					}
+					this55.array[this55.pos++] = b6;
+					var this56 = _this30.tmp;
+					if(this56.pos == this56.array.length) {
+						var newSize55 = this56.array.length << 1;
+						if(newSize55 < 128) {
+							newSize55 = 128;
+						}
+						var newArray55 = new Float32Array(newSize55);
+						newArray55.set(this56.array);
+						this56.array = newArray55;
+					}
+					this56.array[this56.pos++] = a6;
+					_this30.bufferDirty = true;
+					var _this31 = this.content;
+					var x7 = p.x - nnx;
+					var y7 = p.y - nny;
+					var r7 = p.r;
+					var g7 = p.g;
+					var b7 = p.b;
+					var a7 = p.a;
+					var this57 = _this31.tmp;
+					if(this57.pos == this57.array.length) {
+						var newSize56 = this57.array.length << 1;
+						if(newSize56 < 128) {
+							newSize56 = 128;
+						}
+						var newArray56 = new Float32Array(newSize56);
+						newArray56.set(this57.array);
+						this57.array = newArray56;
+					}
+					this57.array[this57.pos++] = x7;
+					var this58 = _this31.tmp;
+					if(this58.pos == this58.array.length) {
+						var newSize57 = this58.array.length << 1;
+						if(newSize57 < 128) {
+							newSize57 = 128;
+						}
+						var newArray57 = new Float32Array(newSize57);
+						newArray57.set(this58.array);
+						this58.array = newArray57;
+					}
+					this58.array[this58.pos++] = y7;
+					var this59 = _this31.tmp;
+					if(this59.pos == this59.array.length) {
+						var newSize58 = this59.array.length << 1;
+						if(newSize58 < 128) {
+							newSize58 = 128;
+						}
+						var newArray58 = new Float32Array(newSize58);
+						newArray58.set(this59.array);
+						this59.array = newArray58;
+					}
+					this59.array[this59.pos++] = 0;
+					var this60 = _this31.tmp;
+					if(this60.pos == this60.array.length) {
+						var newSize59 = this60.array.length << 1;
+						if(newSize59 < 128) {
+							newSize59 = 128;
+						}
+						var newArray59 = new Float32Array(newSize59);
+						newArray59.set(this60.array);
+						this60.array = newArray59;
+					}
+					this60.array[this60.pos++] = 0;
+					var this61 = _this31.tmp;
+					if(this61.pos == this61.array.length) {
+						var newSize60 = this61.array.length << 1;
+						if(newSize60 < 128) {
+							newSize60 = 128;
+						}
+						var newArray60 = new Float32Array(newSize60);
+						newArray60.set(this61.array);
+						this61.array = newArray60;
+					}
+					this61.array[this61.pos++] = r7;
+					var this62 = _this31.tmp;
+					if(this62.pos == this62.array.length) {
+						var newSize61 = this62.array.length << 1;
+						if(newSize61 < 128) {
+							newSize61 = 128;
+						}
+						var newArray61 = new Float32Array(newSize61);
+						newArray61.set(this62.array);
+						this62.array = newArray61;
+					}
+					this62.array[this62.pos++] = g7;
+					var this63 = _this31.tmp;
+					if(this63.pos == this63.array.length) {
+						var newSize62 = this63.array.length << 1;
+						if(newSize62 < 128) {
+							newSize62 = 128;
+						}
+						var newArray62 = new Float32Array(newSize62);
+						newArray62.set(this63.array);
+						this63.array = newArray62;
+					}
+					this63.array[this63.pos++] = b7;
+					var this64 = _this31.tmp;
+					if(this64.pos == this64.array.length) {
+						var newSize63 = this64.array.length << 1;
+						if(newSize63 < 128) {
+							newSize63 = 128;
+						}
+						var newArray63 = new Float32Array(newSize63);
+						newArray63.set(this64.array);
+						this64.array = newArray63;
+					}
+					this64.array[this64.pos++] = a7;
+					_this31.bufferDirty = true;
+					var _this32 = this.content;
+					_this32.index.push(this.pindex + 1);
+					var _this33 = _this32.state;
+					_this33.tail.count += 1;
+					_this33.totalCount += 1;
+					_this32.indexDirty = true;
+					var _this34 = this.content;
+					_this34.index.push(pnext1);
+					var _this35 = _this34.state;
+					_this35.tail.count += 1;
+					_this35.totalCount += 1;
+					_this34.indexDirty = true;
+					var _this36 = this.content;
+					_this36.index.push(this.pindex + 2);
+					var _this37 = _this36.state;
+					_this37.tail.count += 1;
+					_this37.totalCount += 1;
+					_this36.indexDirty = true;
+					var _this38 = this.content;
+					_this38.index.push(this.pindex + 1);
+					var _this39 = _this38.state;
+					_this39.tail.count += 1;
+					_this39.totalCount += 1;
+					_this38.indexDirty = true;
+					var _this40 = this.content;
+					_this40.index.push(pnext1);
+					var _this41 = _this40.state;
+					_this41.tail.count += 1;
+					_this41.totalCount += 1;
+					_this40.indexDirty = true;
+					var _this42 = this.content;
+					_this42.index.push(pnext1 + 1);
+					var _this43 = _this42.state;
+					_this43.tail.count += 1;
+					_this43.totalCount += 1;
+					_this42.indexDirty = true;
+				}
+				var _this44 = this.content;
+				_this44.index.push(this.pindex);
+				var _this45 = _this44.state;
+				_this45.tail.count += 1;
+				_this45.totalCount += 1;
+				_this44.indexDirty = true;
+				var _this46 = this.content;
+				_this46.index.push(this.pindex + 1);
+				var _this47 = _this46.state;
+				_this47.tail.count += 1;
+				_this47.totalCount += 1;
+				_this46.indexDirty = true;
+				var _this48 = this.content;
+				_this48.index.push(this.pindex + 2);
+				var _this49 = _this48.state;
+				_this49.tail.count += 1;
+				_this49.totalCount += 1;
+				_this48.indexDirty = true;
+				this.pindex += 3;
+			}
+			prev = p;
+			p = next;
+		}
+		this.content.setTile(this.tile);
+	}
+	,flushFill: function(i0) {
+		if(this.tmpPoints.length < 3) {
+			return;
+		}
+		var pts = this.tmpPoints;
+		var p0 = pts[0];
+		var p1 = pts[pts.length - 1];
+		var last = null;
+		var tmp;
+		var f = p0.x - p1.x;
+		if((f < 0 ? -f : f) < 1e-9) {
+			var f = p0.y - p1.y;
+			tmp = (f < 0 ? -f : f) < 1e-9;
+		} else {
+			tmp = false;
+		}
+		if(tmp) {
+			last = pts.pop();
+		}
+		if(this.isConvex(pts)) {
+			var _g = 1;
+			var _g1 = pts.length - 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var _this = this.content;
+				_this.index.push(i0);
+				var _this1 = _this.state;
+				_this1.tail.count += 1;
+				_this1.totalCount += 1;
+				_this.indexDirty = true;
+				var _this2 = this.content;
+				_this2.index.push(i0 + i);
+				var _this3 = _this2.state;
+				_this3.tail.count += 1;
+				_this3.totalCount += 1;
+				_this2.indexDirty = true;
+				var _this4 = this.content;
+				_this4.index.push(i0 + i + 1);
+				var _this5 = _this4.state;
+				_this5.tail.count += 1;
+				_this5.totalCount += 1;
+				_this4.indexDirty = true;
+			}
+		} else {
+			var ear = h2d_Graphics.EARCUT;
+			if(ear == null) {
+				ear = new hxd_earcut_Earcut();
+				h2d_Graphics.EARCUT = ear;
+			}
+			var _g = 0;
+			var _g1 = ear.triangulate_h2d_GPoint(pts);
+			while(_g < _g1.length) {
+				var i = _g1[_g];
+				++_g;
+				var _this = this.content;
+				_this.index.push(i + i0);
+				var _this1 = _this.state;
+				_this1.tail.count += 1;
+				_this1.totalCount += 1;
+				_this.indexDirty = true;
+			}
+		}
+		if(last != null) {
+			pts.push(last);
+		}
+	}
+	,flush: function() {
+		if(this.tmpPoints.length == 0) {
+			return;
+		}
+		if(this.doFill) {
+			this.flushFill(this.pindex);
+			this.pindex += this.tmpPoints.length;
+			if(this.content.next()) {
+				this.pindex = 0;
+			}
+		}
+		if(this.lineSize > 0) {
+			this.flushLine(this.pindex);
+			if(this.content.next()) {
+				this.pindex = 0;
+			}
+		}
+		this.tmpPoints = [];
+	}
+	,beginFill: function(color,alpha) {
+		if(alpha == null) {
+			alpha = 1.;
+		}
+		if(color == null) {
+			color = 0;
+		}
+		this.flush();
+		this.tile = h2d_Tile.fromColor(16777215);
+		this.content.setTile(this.tile);
+		var alpha1 = alpha;
+		if(alpha1 == null) {
+			alpha1 = 1.;
+		}
+		this.curA = alpha1;
+		this.curR = (color >> 16 & 255) / 255.;
+		this.curG = (color >> 8 & 255) / 255.;
+		this.curB = (color & 255) / 255.;
+		this.doFill = true;
+	}
+	,lineStyle: function(size,color,alpha) {
+		if(alpha == null) {
+			alpha = 1.;
+		}
+		if(color == null) {
+			color = 0;
+		}
+		if(size == null) {
+			size = 0;
+		}
+		this.flush();
+		this.lineSize = size;
+		this.lineA = alpha;
+		this.lineR = (color >> 16 & 255) / 255.;
+		this.lineG = (color >> 8 & 255) / 255.;
+		this.lineB = (color & 255) / 255.;
+	}
+	,endFill: function() {
+		this.flush();
+		this.doFill = false;
+	}
+	,drawRect: function(x,y,w,h) {
+		this.flush();
+		this.addVertex(x,y,this.curR,this.curG,this.curB,this.curA,x * this.ma + y * this.mc + this.mx,x * this.mb + y * this.md + this.my);
+		var x1 = x + w;
+		this.addVertex(x1,y,this.curR,this.curG,this.curB,this.curA,x1 * this.ma + y * this.mc + this.mx,x1 * this.mb + y * this.md + this.my);
+		var x1 = x + w;
+		var y1 = y + h;
+		this.addVertex(x1,y1,this.curR,this.curG,this.curB,this.curA,x1 * this.ma + y1 * this.mc + this.mx,x1 * this.mb + y1 * this.md + this.my);
+		var y1 = y + h;
+		this.addVertex(x,y1,this.curR,this.curG,this.curB,this.curA,x * this.ma + y1 * this.mc + this.mx,x * this.mb + y1 * this.md + this.my);
+		this.addVertex(x,y,this.curR,this.curG,this.curB,this.curA,x * this.ma + y * this.mc + this.mx,x * this.mb + y * this.md + this.my);
+		var e = 0.01;
+		this.tmpPoints[0].x += e;
+		this.tmpPoints[0].y += e;
+		this.tmpPoints[1].y += e;
+		this.tmpPoints[3].x += e;
+		this.tmpPoints[4].x += e;
+		this.tmpPoints[4].y += e;
+		this.flush();
+	}
+	,addVertex: function(x,y,r,g,b,a,u,v) {
+		if(v == null) {
+			v = 0.;
+		}
+		if(u == null) {
+			u = 0.;
+		}
+		if(x < this.xMin) {
+			this.xMin = x;
+		}
+		if(y < this.yMin) {
+			this.yMin = y;
+		}
+		if(x > this.xMax) {
+			this.xMax = x;
+		}
+		if(y > this.yMax) {
+			this.yMax = y;
+		}
+		if(this.doFill) {
+			var _this = this.content;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = x;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = y;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = u;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = v;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = r;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = g;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = b;
+			var this1 = _this.tmp;
+			if(this1.pos == this1.array.length) {
+				var newSize = this1.array.length << 1;
+				if(newSize < 128) {
+					newSize = 128;
+				}
+				var newArray = new Float32Array(newSize);
+				newArray.set(this1.array);
+				this1.array = newArray;
+			}
+			this1.array[this1.pos++] = a;
+			_this.bufferDirty = true;
+		}
+		var gp = new h2d_GPoint();
+		gp.load(x,y,this.lineR,this.lineG,this.lineB,this.lineA);
+		this.tmpPoints.push(gp);
+	}
+	,draw: function(ctx) {
+		if(!ctx.beginDrawBatchState(this)) {
+			return;
+		}
+		this.content.doRender(ctx);
+	}
+	,sync: function(ctx) {
+		h2d_Drawable.prototype.sync.call(this,ctx);
+		this.flush();
+		this.content.flush();
+	}
+	,__class__: h2d_Graphics
+});
+var h3d_prim_Primitive = function() {
+	this.refCount = 0;
+};
+$hxClasses["h3d.prim.Primitive"] = h3d_prim_Primitive;
+h3d_prim_Primitive.__name__ = "h3d.prim.Primitive";
+h3d_prim_Primitive.prototype = {
+	getBounds: function() {
+		throw haxe_Exception.thrown("not implemented for " + Std.string(this));
+	}
+	,incref: function() {
+		this.refCount++;
+	}
+	,decref: function() {
+		this.refCount--;
+		if(this.refCount <= 0) {
+			this.refCount = 0;
+			this.dispose();
+		}
+	}
+	,alloc: function(engine) {
+		throw haxe_Exception.thrown("not implemented");
+	}
+	,render: function(engine) {
+		var tmp;
+		if(this.buffer != null) {
+			var _this = this.buffer;
+			tmp = _this.buffer == null || _this.buffer.vbuf == null;
+		} else {
+			tmp = true;
+		}
+		if(tmp) {
+			this.alloc(engine);
+		}
+		if(this.indexes == null) {
+			if((this.buffer.flags & 1 << h3d_BufferFlag.Quads._hx_index) != 0) {
+				engine.renderBuffer(this.buffer,engine.mem.quadIndexes,2,0,-1);
+			} else {
+				engine.renderBuffer(this.buffer,engine.mem.triIndexes,3,0,-1);
+			}
+		} else {
+			engine.renderIndexed(this.buffer,this.indexes);
+		}
+	}
+	,dispose: function() {
+		if(this.buffer != null) {
+			this.buffer.dispose();
+			this.buffer = null;
+		}
+		if(this.indexes != null) {
+			this.indexes.dispose();
+			this.indexes = null;
+		}
+	}
+	,toString: function() {
+		var c = js_Boot.getClass(this);
+		return c.__name__.split(".").pop();
+	}
+	,__class__: h3d_prim_Primitive
+};
+var h2d__$Graphics_GraphicsContent = function() {
+	h3d_prim_Primitive.call(this);
+	this.buffers = [];
+	this.state = new h2d_impl_BatchDrawState();
+};
+$hxClasses["h2d._Graphics.GraphicsContent"] = h2d__$Graphics_GraphicsContent;
+h2d__$Graphics_GraphicsContent.__name__ = "h2d._Graphics.GraphicsContent";
+h2d__$Graphics_GraphicsContent.__super__ = h3d_prim_Primitive;
+h2d__$Graphics_GraphicsContent.prototype = $extend(h3d_prim_Primitive.prototype,{
+	setTile: function(tile) {
+		if(tile != null) {
+			this.state.setTexture(tile.innerTex);
+		}
+	}
+	,next: function() {
+		var nvect = this.tmp.pos >> 3;
+		if(nvect < 32768) {
+			return false;
+		}
+		this.buffers.push({ buf : this.tmp, idx : this.index, vbuf : null, ibuf : null, state : this.state});
+		var this1 = hxd__$FloatBuffer_Float32Expand._new(0);
+		this.tmp = this1;
+		var this1 = new Array(0);
+		this.index = this1;
+		var tex = this.state.tail.texture;
+		this.state = new h2d_impl_BatchDrawState();
+		this.state.setTexture(tex);
+		h3d_prim_Primitive.prototype.dispose.call(this);
+		return true;
+	}
+	,alloc: function(engine) {
+		if(this.index.length <= 0) {
+			return;
+		}
+		var alloc = hxd_impl_Allocator.get();
+		this.buffer = alloc.ofFloats(this.tmp,8,2);
+		this.indexes = alloc.ofIndexes(this.index);
+		var _g = 0;
+		var _g1 = this.buffers;
+		while(_g < _g1.length) {
+			var b = _g1[_g];
+			++_g;
+			var tmp;
+			if(b.vbuf != null) {
+				var _this = b.vbuf;
+				tmp = _this.buffer == null || _this.buffer.vbuf == null;
+			} else {
+				tmp = true;
+			}
+			if(tmp) {
+				b.vbuf = alloc.ofFloats(b.buf,8,2);
+			}
+			if(b.ibuf == null || b.ibuf.isDisposed()) {
+				b.ibuf = alloc.ofIndexes(b.idx);
+			}
+		}
+		this.bufferDirty = false;
+		this.indexDirty = false;
+	}
+	,doRender: function(ctx) {
+		if(this.index.length == 0) {
+			return;
+		}
+		this.flush();
+		var _g = 0;
+		var _g1 = this.buffers;
+		while(_g < _g1.length) {
+			var b = _g1[_g];
+			++_g;
+			b.state.drawIndexed(ctx,b.vbuf,b.ibuf);
+		}
+		this.state.drawIndexed(ctx,this.buffer,this.indexes);
+	}
+	,flush: function() {
+		var tmp;
+		if(this.buffer != null) {
+			var _this = this.buffer;
+			tmp = _this.buffer == null || _this.buffer.vbuf == null;
+		} else {
+			tmp = true;
+		}
+		if(tmp) {
+			this.alloc(h3d_Engine.CURRENT);
+		} else {
+			var allocator = hxd_impl_Allocator.get();
+			if(this.bufferDirty) {
+				allocator.disposeBuffer(this.buffer);
+				this.buffer = allocator.ofFloats(this.tmp,8,2);
+				this.bufferDirty = false;
+			}
+			if(this.indexDirty) {
+				allocator.disposeIndexBuffer(this.indexes);
+				this.indexes = allocator.ofIndexes(this.index);
+				this.indexDirty = false;
+			}
+		}
+	}
+	,dispose: function() {
+		var _g = 0;
+		var _g1 = this.buffers;
+		while(_g < _g1.length) {
+			var b = _g1[_g];
+			++_g;
+			if(b.vbuf != null) {
+				hxd_impl_Allocator.get().disposeBuffer(b.vbuf);
+			}
+			if(b.ibuf != null) {
+				hxd_impl_Allocator.get().disposeIndexBuffer(b.ibuf);
+			}
+			b.vbuf = null;
+			b.ibuf = null;
+			b.state.clear();
+		}
+		if(this.buffer != null) {
+			hxd_impl_Allocator.get().disposeBuffer(this.buffer);
+			this.buffer = null;
+		}
+		if(this.indexes != null) {
+			hxd_impl_Allocator.get().disposeIndexBuffer(this.indexes);
+			this.indexes = null;
+		}
+		this.state.clear();
+		h3d_prim_Primitive.prototype.dispose.call(this);
+	}
+	,clear: function() {
+		this.dispose();
+		var this1 = hxd__$FloatBuffer_Float32Expand._new(0);
+		this.tmp = this1;
+		var this1 = new Array(0);
+		this.index = this1;
+		this.buffers = [];
+	}
+	,__class__: h2d__$Graphics_GraphicsContent
+});
+var h2d_impl_BatchDrawState = function() {
+	this.head = this.tail = new h2d_impl__$BatchDrawState_StateEntry(null);
+	this.totalCount = 0;
+};
+$hxClasses["h2d.impl.BatchDrawState"] = h2d_impl_BatchDrawState;
+h2d_impl_BatchDrawState.__name__ = "h2d.impl.BatchDrawState";
+h2d_impl_BatchDrawState.prototype = {
+	setTexture: function(texture) {
+		if(texture != null) {
+			if(this.tail.texture == null) {
+				this.tail.texture = texture;
+			} else if(this.tail.texture != texture) {
+				var cur = this.tail;
+				if(cur.count == 0) {
+					cur.set(texture);
+				} else if(cur.next == null) {
+					cur.next = this.tail = new h2d_impl__$BatchDrawState_StateEntry(texture);
+				} else {
+					this.tail = cur.next.set(texture);
+				}
+			}
+		}
+	}
+	,clear: function() {
+		var state = this.head;
+		while(true) {
+			state.texture = null;
+			state = state.next;
+			if(!(state != null)) {
+				break;
+			}
+		}
+		this.tail = this.head;
+		this.tail.count = 0;
+		this.totalCount = 0;
+	}
+	,drawQuads: function(ctx,buffer,offset,length) {
+		if(length == null) {
+			length = -1;
+		}
+		if(offset == null) {
+			offset = 0;
+		}
+		var state = this.head;
+		var last = this.tail.next;
+		var engine = ctx.engine;
+		var stateLen;
+		if(offset == 0 && length == -1) {
+			while(true) {
+				ctx.texture = state.texture;
+				ctx.beforeDraw();
+				stateLen = state.count >> 1;
+				var start = offset;
+				var max = stateLen;
+				if(max == null) {
+					max = -1;
+				}
+				if(start == null) {
+					start = 0;
+				}
+				engine.renderBuffer(buffer,engine.mem.quadIndexes,2,start,max);
+				offset += stateLen;
+				state = state.next;
+				if(!(state != last)) {
+					break;
+				}
+			}
+		} else {
+			if(length == -1) {
+				length = (this.totalCount >> 1) - offset;
+			}
+			var caret = 0;
+			while(true) {
+				stateLen = state.count >> 1;
+				if(caret + stateLen >= offset) {
+					var stateMin = offset >= caret ? offset : caret;
+					var stateLen1 = length > stateLen ? stateLen : length;
+					ctx.texture = state.texture;
+					ctx.beforeDraw();
+					var start = stateMin;
+					var max = stateLen1;
+					if(max == null) {
+						max = -1;
+					}
+					if(start == null) {
+						start = 0;
+					}
+					engine.renderBuffer(buffer,engine.mem.quadIndexes,2,start,max);
+					length -= stateLen1;
+					if(length == 0) {
+						break;
+					}
+				}
+				caret += stateLen;
+				state = state.next;
+				if(!(state != last)) {
+					break;
+				}
+			}
+		}
+	}
+	,drawIndexed: function(ctx,buffer,indices,offset,length) {
+		if(length == null) {
+			length = -1;
+		}
+		if(offset == null) {
+			offset = 0;
+		}
+		var state = this.head;
+		var last = this.tail.next;
+		var engine = ctx.engine;
+		var stateLen;
+		if(offset == 0 && length == -1) {
+			while(true) {
+				ctx.texture = state.texture;
+				ctx.beforeDraw();
+				stateLen = state.count / 3 | 0;
+				engine.renderIndexed(buffer,indices,offset,stateLen);
+				offset += stateLen;
+				state = state.next;
+				if(!(state != last)) {
+					break;
+				}
+			}
+		} else {
+			if(length == -1) {
+				length = this.totalCount / 3 | 0;
+			}
+			var caret = 0;
+			while(true) {
+				stateLen = state.count / 3 | 0;
+				if(caret + stateLen >= offset) {
+					var stateMin = offset >= caret ? offset : caret;
+					var stateLen1 = length > stateLen ? stateLen : length;
+					ctx.texture = state.texture;
+					ctx.beforeDraw();
+					engine.renderIndexed(buffer,indices,stateMin,stateLen1);
+					length -= stateLen1;
+					if(length == 0) {
+						break;
+					}
+				}
+				caret += stateLen;
+				state = state.next;
+				if(!(state != last)) {
+					break;
+				}
+			}
+		}
+	}
+	,__class__: h2d_impl_BatchDrawState
+};
+var h2d_impl__$BatchDrawState_StateEntry = function(texture) {
+	this.texture = texture;
+	this.count = 0;
+};
+$hxClasses["h2d.impl._BatchDrawState.StateEntry"] = h2d_impl__$BatchDrawState_StateEntry;
+h2d_impl__$BatchDrawState_StateEntry.__name__ = "h2d.impl._BatchDrawState.StateEntry";
+h2d_impl__$BatchDrawState_StateEntry.prototype = {
+	set: function(texture) {
+		this.texture = texture;
+		this.count = 0;
+		return this;
+	}
+	,__class__: h2d_impl__$BatchDrawState_StateEntry
+};
+var domkit_CompRect = function() {
+	domkit_Component.call(this,"rect",function(_,parent) {
+		return new screens_Rectange(parent);
+	},null);
+	this.parser = new MyCustomCSSParser();
+	this.addHandler("width",($_=this.parser,$bind($_,$_.parseInt)),0,function(o,v) {
+		o.set_width(v);
+	},null);
+	this.addHandler("height",($_=this.parser,$bind($_,$_.parseInt)),0,function(o,v) {
+		o.set_height(v);
+	},null);
+	this.addHandler("color",($_=this.parser,$bind($_,$_.parseColor)),0,function(o,v) {
+		o.set_color(v);
+	},null);
+};
+$hxClasses["domkit.CompRect"] = domkit_CompRect;
+domkit_CompRect.__name__ = "domkit.CompRect";
+domkit_CompRect.__super__ = domkit_Component;
+domkit_CompRect.prototype = $extend(domkit_Component.prototype,{
+	__class__: domkit_CompRect
+});
 var h2d_domkit_ScaleGridComp = function() { };
 $hxClasses["h2d.domkit.ScaleGridComp"] = h2d_domkit_ScaleGridComp;
 h2d_domkit_ScaleGridComp.__name__ = "h2d.domkit.ScaleGridComp";
@@ -11094,65 +12856,6 @@ h2d_ScaleGrid.prototype = $extend(h2d_TileGroup.prototype,{
 	}
 	,__class__: h2d_ScaleGrid
 });
-var h3d_prim_Primitive = function() {
-	this.refCount = 0;
-};
-$hxClasses["h3d.prim.Primitive"] = h3d_prim_Primitive;
-h3d_prim_Primitive.__name__ = "h3d.prim.Primitive";
-h3d_prim_Primitive.prototype = {
-	getBounds: function() {
-		throw haxe_Exception.thrown("not implemented for " + Std.string(this));
-	}
-	,incref: function() {
-		this.refCount++;
-	}
-	,decref: function() {
-		this.refCount--;
-		if(this.refCount <= 0) {
-			this.refCount = 0;
-			this.dispose();
-		}
-	}
-	,alloc: function(engine) {
-		throw haxe_Exception.thrown("not implemented");
-	}
-	,render: function(engine) {
-		var tmp;
-		if(this.buffer != null) {
-			var _this = this.buffer;
-			tmp = _this.buffer == null || _this.buffer.vbuf == null;
-		} else {
-			tmp = true;
-		}
-		if(tmp) {
-			this.alloc(engine);
-		}
-		if(this.indexes == null) {
-			if((this.buffer.flags & 1 << h3d_BufferFlag.Quads._hx_index) != 0) {
-				engine.renderBuffer(this.buffer,engine.mem.quadIndexes,2,0,-1);
-			} else {
-				engine.renderBuffer(this.buffer,engine.mem.triIndexes,3,0,-1);
-			}
-		} else {
-			engine.renderIndexed(this.buffer,this.indexes);
-		}
-	}
-	,dispose: function() {
-		if(this.buffer != null) {
-			this.buffer.dispose();
-			this.buffer = null;
-		}
-		if(this.indexes != null) {
-			this.indexes.dispose();
-			this.indexes = null;
-		}
-	}
-	,toString: function() {
-		var c = js_Boot.getClass(this);
-		return c.__name__.split(".").pop();
-	}
-	,__class__: h3d_prim_Primitive
-};
 var h2d_TileLayerContent = function() {
 	this.useAllocatorLimit = 1024;
 	h3d_prim_Primitive.call(this);
@@ -11601,172 +13304,6 @@ h2d_TileLayerContent.prototype = $extend(h3d_prim_Primitive.prototype,{
 	}
 	,__class__: h2d_TileLayerContent
 });
-var h2d_impl_BatchDrawState = function() {
-	this.head = this.tail = new h2d_impl__$BatchDrawState_StateEntry(null);
-	this.totalCount = 0;
-};
-$hxClasses["h2d.impl.BatchDrawState"] = h2d_impl_BatchDrawState;
-h2d_impl_BatchDrawState.__name__ = "h2d.impl.BatchDrawState";
-h2d_impl_BatchDrawState.prototype = {
-	setTexture: function(texture) {
-		if(texture != null) {
-			if(this.tail.texture == null) {
-				this.tail.texture = texture;
-			} else if(this.tail.texture != texture) {
-				var cur = this.tail;
-				if(cur.count == 0) {
-					cur.set(texture);
-				} else if(cur.next == null) {
-					cur.next = this.tail = new h2d_impl__$BatchDrawState_StateEntry(texture);
-				} else {
-					this.tail = cur.next.set(texture);
-				}
-			}
-		}
-	}
-	,clear: function() {
-		var state = this.head;
-		while(true) {
-			state.texture = null;
-			state = state.next;
-			if(!(state != null)) {
-				break;
-			}
-		}
-		this.tail = this.head;
-		this.tail.count = 0;
-		this.totalCount = 0;
-	}
-	,drawQuads: function(ctx,buffer,offset,length) {
-		if(length == null) {
-			length = -1;
-		}
-		if(offset == null) {
-			offset = 0;
-		}
-		var state = this.head;
-		var last = this.tail.next;
-		var engine = ctx.engine;
-		var stateLen;
-		if(offset == 0 && length == -1) {
-			while(true) {
-				ctx.texture = state.texture;
-				ctx.beforeDraw();
-				stateLen = state.count >> 1;
-				var start = offset;
-				var max = stateLen;
-				if(max == null) {
-					max = -1;
-				}
-				if(start == null) {
-					start = 0;
-				}
-				engine.renderBuffer(buffer,engine.mem.quadIndexes,2,start,max);
-				offset += stateLen;
-				state = state.next;
-				if(!(state != last)) {
-					break;
-				}
-			}
-		} else {
-			if(length == -1) {
-				length = (this.totalCount >> 1) - offset;
-			}
-			var caret = 0;
-			while(true) {
-				stateLen = state.count >> 1;
-				if(caret + stateLen >= offset) {
-					var stateMin = offset >= caret ? offset : caret;
-					var stateLen1 = length > stateLen ? stateLen : length;
-					ctx.texture = state.texture;
-					ctx.beforeDraw();
-					var start = stateMin;
-					var max = stateLen1;
-					if(max == null) {
-						max = -1;
-					}
-					if(start == null) {
-						start = 0;
-					}
-					engine.renderBuffer(buffer,engine.mem.quadIndexes,2,start,max);
-					length -= stateLen1;
-					if(length == 0) {
-						break;
-					}
-				}
-				caret += stateLen;
-				state = state.next;
-				if(!(state != last)) {
-					break;
-				}
-			}
-		}
-	}
-	,drawIndexed: function(ctx,buffer,indices,offset,length) {
-		if(length == null) {
-			length = -1;
-		}
-		if(offset == null) {
-			offset = 0;
-		}
-		var state = this.head;
-		var last = this.tail.next;
-		var engine = ctx.engine;
-		var stateLen;
-		if(offset == 0 && length == -1) {
-			while(true) {
-				ctx.texture = state.texture;
-				ctx.beforeDraw();
-				stateLen = state.count / 3 | 0;
-				engine.renderIndexed(buffer,indices,offset,stateLen);
-				offset += stateLen;
-				state = state.next;
-				if(!(state != last)) {
-					break;
-				}
-			}
-		} else {
-			if(length == -1) {
-				length = this.totalCount / 3 | 0;
-			}
-			var caret = 0;
-			while(true) {
-				stateLen = state.count / 3 | 0;
-				if(caret + stateLen >= offset) {
-					var stateMin = offset >= caret ? offset : caret;
-					var stateLen1 = length > stateLen ? stateLen : length;
-					ctx.texture = state.texture;
-					ctx.beforeDraw();
-					engine.renderIndexed(buffer,indices,stateMin,stateLen1);
-					length -= stateLen1;
-					if(length == 0) {
-						break;
-					}
-				}
-				caret += stateLen;
-				state = state.next;
-				if(!(state != last)) {
-					break;
-				}
-			}
-		}
-	}
-	,__class__: h2d_impl_BatchDrawState
-};
-var h2d_impl__$BatchDrawState_StateEntry = function(texture) {
-	this.texture = texture;
-	this.count = 0;
-};
-$hxClasses["h2d.impl._BatchDrawState.StateEntry"] = h2d_impl__$BatchDrawState_StateEntry;
-h2d_impl__$BatchDrawState_StateEntry.__name__ = "h2d.impl._BatchDrawState.StateEntry";
-h2d_impl__$BatchDrawState_StateEntry.prototype = {
-	set: function(texture) {
-		this.texture = texture;
-		this.count = 0;
-		return this;
-	}
-	,__class__: h2d_impl__$BatchDrawState_StateEntry
-};
 var domkit_CompScaleGrid = function() {
 	domkit_Component.call(this,"scale-grid",function(_,parent) {
 		return h2d_domkit_ScaleGridComp.create(parent);
@@ -11853,6 +13390,18 @@ domkit_CompScreen6.__super__ = domkit_Component;
 domkit_CompScreen6.prototype = $extend(domkit_Component.prototype,{
 	__class__: domkit_CompScreen6
 });
+var domkit_CompScreen7 = function() {
+	domkit_Component.call(this,"screen7",function(_,parent) {
+		return new screens_Screen7Comp(parent);
+	},domkit_CompObject.inst);
+	this.parser = domkit_CompObject.inst.parser;
+};
+$hxClasses["domkit.CompScreen7"] = domkit_CompScreen7;
+domkit_CompScreen7.__name__ = "domkit.CompScreen7";
+domkit_CompScreen7.__super__ = domkit_Component;
+domkit_CompScreen7.prototype = $extend(domkit_Component.prototype,{
+	__class__: domkit_CompScreen7
+});
 var screens_SelectorMyComponent = function(t,parent) {
 	h2d_Flow.call(this,parent);
 	var tmp = this.dom;
@@ -11862,7 +13411,7 @@ var screens_SelectorMyComponent = function(t,parent) {
 	} else {
 		tmp.component = domkit_Component.get("selector");
 	}
-	var tmp1 = domkit_Properties.createNew("text",tmp,[],null);
+	var tmp1 = domkit_Properties.createNew("html-text",tmp,[],null);
 	var __attrib = t;
 	tmp1.obj.set_text(__attrib);
 	tmp1.initStyle("text",__attrib);
@@ -15621,1418 +17170,6 @@ h2d_GPoint.prototype = {
 	}
 	,__class__: h2d_GPoint
 };
-var h2d__$Graphics_GraphicsContent = function() {
-	h3d_prim_Primitive.call(this);
-	this.buffers = [];
-	this.state = new h2d_impl_BatchDrawState();
-};
-$hxClasses["h2d._Graphics.GraphicsContent"] = h2d__$Graphics_GraphicsContent;
-h2d__$Graphics_GraphicsContent.__name__ = "h2d._Graphics.GraphicsContent";
-h2d__$Graphics_GraphicsContent.__super__ = h3d_prim_Primitive;
-h2d__$Graphics_GraphicsContent.prototype = $extend(h3d_prim_Primitive.prototype,{
-	setTile: function(tile) {
-		if(tile != null) {
-			this.state.setTexture(tile.innerTex);
-		}
-	}
-	,next: function() {
-		var nvect = this.tmp.pos >> 3;
-		if(nvect < 32768) {
-			return false;
-		}
-		this.buffers.push({ buf : this.tmp, idx : this.index, vbuf : null, ibuf : null, state : this.state});
-		var this1 = hxd__$FloatBuffer_Float32Expand._new(0);
-		this.tmp = this1;
-		var this1 = new Array(0);
-		this.index = this1;
-		var tex = this.state.tail.texture;
-		this.state = new h2d_impl_BatchDrawState();
-		this.state.setTexture(tex);
-		h3d_prim_Primitive.prototype.dispose.call(this);
-		return true;
-	}
-	,alloc: function(engine) {
-		if(this.index.length <= 0) {
-			return;
-		}
-		var alloc = hxd_impl_Allocator.get();
-		this.buffer = alloc.ofFloats(this.tmp,8,2);
-		this.indexes = alloc.ofIndexes(this.index);
-		var _g = 0;
-		var _g1 = this.buffers;
-		while(_g < _g1.length) {
-			var b = _g1[_g];
-			++_g;
-			var tmp;
-			if(b.vbuf != null) {
-				var _this = b.vbuf;
-				tmp = _this.buffer == null || _this.buffer.vbuf == null;
-			} else {
-				tmp = true;
-			}
-			if(tmp) {
-				b.vbuf = alloc.ofFloats(b.buf,8,2);
-			}
-			if(b.ibuf == null || b.ibuf.isDisposed()) {
-				b.ibuf = alloc.ofIndexes(b.idx);
-			}
-		}
-		this.bufferDirty = false;
-		this.indexDirty = false;
-	}
-	,doRender: function(ctx) {
-		if(this.index.length == 0) {
-			return;
-		}
-		this.flush();
-		var _g = 0;
-		var _g1 = this.buffers;
-		while(_g < _g1.length) {
-			var b = _g1[_g];
-			++_g;
-			b.state.drawIndexed(ctx,b.vbuf,b.ibuf);
-		}
-		this.state.drawIndexed(ctx,this.buffer,this.indexes);
-	}
-	,flush: function() {
-		var tmp;
-		if(this.buffer != null) {
-			var _this = this.buffer;
-			tmp = _this.buffer == null || _this.buffer.vbuf == null;
-		} else {
-			tmp = true;
-		}
-		if(tmp) {
-			this.alloc(h3d_Engine.CURRENT);
-		} else {
-			var allocator = hxd_impl_Allocator.get();
-			if(this.bufferDirty) {
-				allocator.disposeBuffer(this.buffer);
-				this.buffer = allocator.ofFloats(this.tmp,8,2);
-				this.bufferDirty = false;
-			}
-			if(this.indexDirty) {
-				allocator.disposeIndexBuffer(this.indexes);
-				this.indexes = allocator.ofIndexes(this.index);
-				this.indexDirty = false;
-			}
-		}
-	}
-	,dispose: function() {
-		var _g = 0;
-		var _g1 = this.buffers;
-		while(_g < _g1.length) {
-			var b = _g1[_g];
-			++_g;
-			if(b.vbuf != null) {
-				hxd_impl_Allocator.get().disposeBuffer(b.vbuf);
-			}
-			if(b.ibuf != null) {
-				hxd_impl_Allocator.get().disposeIndexBuffer(b.ibuf);
-			}
-			b.vbuf = null;
-			b.ibuf = null;
-			b.state.clear();
-		}
-		if(this.buffer != null) {
-			hxd_impl_Allocator.get().disposeBuffer(this.buffer);
-			this.buffer = null;
-		}
-		if(this.indexes != null) {
-			hxd_impl_Allocator.get().disposeIndexBuffer(this.indexes);
-			this.indexes = null;
-		}
-		this.state.clear();
-		h3d_prim_Primitive.prototype.dispose.call(this);
-	}
-	,clear: function() {
-		this.dispose();
-		var this1 = hxd__$FloatBuffer_Float32Expand._new(0);
-		this.tmp = this1;
-		var this1 = new Array(0);
-		this.index = this1;
-		this.buffers = [];
-	}
-	,__class__: h2d__$Graphics_GraphicsContent
-});
-var h2d_Graphics = function(parent) {
-	this.bevel = 0.25;
-	this.my = 0.;
-	this.mx = 0.;
-	this.md = 1.;
-	this.mc = 0.;
-	this.mb = 0.;
-	this.ma = 1.;
-	h2d_Drawable.call(this,parent);
-	this.content = new h2d__$Graphics_GraphicsContent();
-	this.tile = h2d_Tile.fromColor(16777215);
-	this.clear();
-};
-$hxClasses["h2d.Graphics"] = h2d_Graphics;
-h2d_Graphics.__name__ = "h2d.Graphics";
-h2d_Graphics.__super__ = h2d_Drawable;
-h2d_Graphics.prototype = $extend(h2d_Drawable.prototype,{
-	onRemove: function() {
-		h2d_Drawable.prototype.onRemove.call(this);
-		this.clear();
-	}
-	,clear: function() {
-		this.content.clear();
-		this.tmpPoints = [];
-		this.pindex = 0;
-		this.lineSize = 0;
-		this.xMin = Infinity;
-		this.yMin = Infinity;
-		this.yMax = -Infinity;
-		this.xMax = -Infinity;
-	}
-	,getBoundsRec: function(relativeTo,out,forSize) {
-		h2d_Drawable.prototype.getBoundsRec.call(this,relativeTo,out,forSize);
-		if(this.tile != null) {
-			this.addBounds(relativeTo,out,this.xMin,this.yMin,this.xMax - this.xMin,this.yMax - this.yMin);
-		}
-	}
-	,isConvex: function(points) {
-		var first = true;
-		var sign = false;
-		var _g = 0;
-		var _g1 = points.length;
-		while(_g < _g1) {
-			var i = _g++;
-			var p1 = points[i];
-			var p2 = points[(i + 1) % points.length];
-			var p3 = points[(i + 2) % points.length];
-			var s = (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x) > 0;
-			if(first) {
-				first = false;
-				sign = s;
-			} else if(sign != s) {
-				return false;
-			}
-		}
-		return true;
-	}
-	,flushLine: function(start) {
-		var pts = this.tmpPoints;
-		var last = pts.length - 1;
-		var prev = pts[last];
-		var p = pts[0];
-		this.content.setTile(h2d_Tile.fromColor(16777215));
-		var closed = p.x == prev.x && p.y == prev.y;
-		var count = pts.length;
-		if(!closed) {
-			var prevLast = pts[last - 1];
-			if(prevLast == null) {
-				prevLast = p;
-			}
-			var gp = new h2d_GPoint();
-			gp.load(prev.x * 2 - prevLast.x,prev.y * 2 - prevLast.y,0,0,0,0);
-			pts.push(gp);
-			var pNext = pts[1];
-			if(pNext == null) {
-				pNext = p;
-			}
-			var gp = new h2d_GPoint();
-			gp.load(p.x * 2 - pNext.x,p.y * 2 - pNext.y,0,0,0,0);
-			prev = gp;
-		} else if(p != prev) {
-			--count;
-			--last;
-			prev = pts[last];
-		}
-		var _g = 0;
-		var _g1 = count;
-		while(_g < _g1) {
-			var i = _g++;
-			var next = pts[(i + 1) % pts.length];
-			var nx1 = prev.y - p.y;
-			var ny1 = p.x - prev.x;
-			var ns1 = 1. / Math.sqrt(nx1 * nx1 + ny1 * ny1);
-			var nx2 = p.y - next.y;
-			var ny2 = next.x - p.x;
-			var ns2 = 1. / Math.sqrt(nx2 * nx2 + ny2 * ny2);
-			var nx = nx1 * ns1 + nx2 * ns2;
-			var ny = ny1 * ns1 + ny2 * ns2;
-			var ns = 1. / Math.sqrt(nx * nx + ny * ny);
-			nx *= ns;
-			ny *= ns;
-			var size = nx * nx1 * ns1 + ny * ny1 * ns1;
-			if(size < 0.1) {
-				size = 0.1;
-			}
-			var d = this.lineSize * 0.5 / size;
-			nx *= d;
-			ny *= d;
-			if(size > this.bevel) {
-				var _this = this.content;
-				var x = p.x + nx;
-				var y = p.y + ny;
-				var r = p.r;
-				var g = p.g;
-				var b = p.b;
-				var a = p.a;
-				var this1 = _this.tmp;
-				if(this1.pos == this1.array.length) {
-					var newSize = this1.array.length << 1;
-					if(newSize < 128) {
-						newSize = 128;
-					}
-					var newArray = new Float32Array(newSize);
-					newArray.set(this1.array);
-					this1.array = newArray;
-				}
-				this1.array[this1.pos++] = x;
-				var this2 = _this.tmp;
-				if(this2.pos == this2.array.length) {
-					var newSize1 = this2.array.length << 1;
-					if(newSize1 < 128) {
-						newSize1 = 128;
-					}
-					var newArray1 = new Float32Array(newSize1);
-					newArray1.set(this2.array);
-					this2.array = newArray1;
-				}
-				this2.array[this2.pos++] = y;
-				var this3 = _this.tmp;
-				if(this3.pos == this3.array.length) {
-					var newSize2 = this3.array.length << 1;
-					if(newSize2 < 128) {
-						newSize2 = 128;
-					}
-					var newArray2 = new Float32Array(newSize2);
-					newArray2.set(this3.array);
-					this3.array = newArray2;
-				}
-				this3.array[this3.pos++] = 0;
-				var this4 = _this.tmp;
-				if(this4.pos == this4.array.length) {
-					var newSize3 = this4.array.length << 1;
-					if(newSize3 < 128) {
-						newSize3 = 128;
-					}
-					var newArray3 = new Float32Array(newSize3);
-					newArray3.set(this4.array);
-					this4.array = newArray3;
-				}
-				this4.array[this4.pos++] = 0;
-				var this5 = _this.tmp;
-				if(this5.pos == this5.array.length) {
-					var newSize4 = this5.array.length << 1;
-					if(newSize4 < 128) {
-						newSize4 = 128;
-					}
-					var newArray4 = new Float32Array(newSize4);
-					newArray4.set(this5.array);
-					this5.array = newArray4;
-				}
-				this5.array[this5.pos++] = r;
-				var this6 = _this.tmp;
-				if(this6.pos == this6.array.length) {
-					var newSize5 = this6.array.length << 1;
-					if(newSize5 < 128) {
-						newSize5 = 128;
-					}
-					var newArray5 = new Float32Array(newSize5);
-					newArray5.set(this6.array);
-					this6.array = newArray5;
-				}
-				this6.array[this6.pos++] = g;
-				var this7 = _this.tmp;
-				if(this7.pos == this7.array.length) {
-					var newSize6 = this7.array.length << 1;
-					if(newSize6 < 128) {
-						newSize6 = 128;
-					}
-					var newArray6 = new Float32Array(newSize6);
-					newArray6.set(this7.array);
-					this7.array = newArray6;
-				}
-				this7.array[this7.pos++] = b;
-				var this8 = _this.tmp;
-				if(this8.pos == this8.array.length) {
-					var newSize7 = this8.array.length << 1;
-					if(newSize7 < 128) {
-						newSize7 = 128;
-					}
-					var newArray7 = new Float32Array(newSize7);
-					newArray7.set(this8.array);
-					this8.array = newArray7;
-				}
-				this8.array[this8.pos++] = a;
-				_this.bufferDirty = true;
-				var _this1 = this.content;
-				var x1 = p.x - nx;
-				var y1 = p.y - ny;
-				var r1 = p.r;
-				var g1 = p.g;
-				var b1 = p.b;
-				var a1 = p.a;
-				var this9 = _this1.tmp;
-				if(this9.pos == this9.array.length) {
-					var newSize8 = this9.array.length << 1;
-					if(newSize8 < 128) {
-						newSize8 = 128;
-					}
-					var newArray8 = new Float32Array(newSize8);
-					newArray8.set(this9.array);
-					this9.array = newArray8;
-				}
-				this9.array[this9.pos++] = x1;
-				var this10 = _this1.tmp;
-				if(this10.pos == this10.array.length) {
-					var newSize9 = this10.array.length << 1;
-					if(newSize9 < 128) {
-						newSize9 = 128;
-					}
-					var newArray9 = new Float32Array(newSize9);
-					newArray9.set(this10.array);
-					this10.array = newArray9;
-				}
-				this10.array[this10.pos++] = y1;
-				var this11 = _this1.tmp;
-				if(this11.pos == this11.array.length) {
-					var newSize10 = this11.array.length << 1;
-					if(newSize10 < 128) {
-						newSize10 = 128;
-					}
-					var newArray10 = new Float32Array(newSize10);
-					newArray10.set(this11.array);
-					this11.array = newArray10;
-				}
-				this11.array[this11.pos++] = 0;
-				var this12 = _this1.tmp;
-				if(this12.pos == this12.array.length) {
-					var newSize11 = this12.array.length << 1;
-					if(newSize11 < 128) {
-						newSize11 = 128;
-					}
-					var newArray11 = new Float32Array(newSize11);
-					newArray11.set(this12.array);
-					this12.array = newArray11;
-				}
-				this12.array[this12.pos++] = 0;
-				var this13 = _this1.tmp;
-				if(this13.pos == this13.array.length) {
-					var newSize12 = this13.array.length << 1;
-					if(newSize12 < 128) {
-						newSize12 = 128;
-					}
-					var newArray12 = new Float32Array(newSize12);
-					newArray12.set(this13.array);
-					this13.array = newArray12;
-				}
-				this13.array[this13.pos++] = r1;
-				var this14 = _this1.tmp;
-				if(this14.pos == this14.array.length) {
-					var newSize13 = this14.array.length << 1;
-					if(newSize13 < 128) {
-						newSize13 = 128;
-					}
-					var newArray13 = new Float32Array(newSize13);
-					newArray13.set(this14.array);
-					this14.array = newArray13;
-				}
-				this14.array[this14.pos++] = g1;
-				var this15 = _this1.tmp;
-				if(this15.pos == this15.array.length) {
-					var newSize14 = this15.array.length << 1;
-					if(newSize14 < 128) {
-						newSize14 = 128;
-					}
-					var newArray14 = new Float32Array(newSize14);
-					newArray14.set(this15.array);
-					this15.array = newArray14;
-				}
-				this15.array[this15.pos++] = b1;
-				var this16 = _this1.tmp;
-				if(this16.pos == this16.array.length) {
-					var newSize15 = this16.array.length << 1;
-					if(newSize15 < 128) {
-						newSize15 = 128;
-					}
-					var newArray15 = new Float32Array(newSize15);
-					newArray15.set(this16.array);
-					this16.array = newArray15;
-				}
-				this16.array[this16.pos++] = a1;
-				_this1.bufferDirty = true;
-				var pnext = i == last ? start : this.pindex + 2;
-				if(i < count - 1 || closed) {
-					var _this2 = this.content;
-					_this2.index.push(this.pindex);
-					var _this3 = _this2.state;
-					_this3.tail.count += 1;
-					_this3.totalCount += 1;
-					_this2.indexDirty = true;
-					var _this4 = this.content;
-					_this4.index.push(this.pindex + 1);
-					var _this5 = _this4.state;
-					_this5.tail.count += 1;
-					_this5.totalCount += 1;
-					_this4.indexDirty = true;
-					var _this6 = this.content;
-					_this6.index.push(pnext);
-					var _this7 = _this6.state;
-					_this7.tail.count += 1;
-					_this7.totalCount += 1;
-					_this6.indexDirty = true;
-					var _this8 = this.content;
-					_this8.index.push(this.pindex + 1);
-					var _this9 = _this8.state;
-					_this9.tail.count += 1;
-					_this9.totalCount += 1;
-					_this8.indexDirty = true;
-					var _this10 = this.content;
-					_this10.index.push(pnext);
-					var _this11 = _this10.state;
-					_this11.tail.count += 1;
-					_this11.totalCount += 1;
-					_this10.indexDirty = true;
-					var _this12 = this.content;
-					_this12.index.push(pnext + 1);
-					var _this13 = _this12.state;
-					_this13.tail.count += 1;
-					_this13.totalCount += 1;
-					_this12.indexDirty = true;
-				}
-				this.pindex += 2;
-			} else {
-				var n0x = next.x - p.x;
-				var n0y = next.y - p.y;
-				var sign = n0x * nx + n0y * ny;
-				var nnx = -ny;
-				var nny = nx;
-				var size1 = nnx * nx1 * ns1 + nny * ny1 * ns1;
-				var d1 = this.lineSize * 0.5 / size1;
-				nnx *= d1;
-				nny *= d1;
-				var pnext1 = i == last ? start : this.pindex + 3;
-				if(sign > 0) {
-					var _this14 = this.content;
-					var x2 = p.x + nx;
-					var y2 = p.y + ny;
-					var r2 = p.r;
-					var g2 = p.g;
-					var b2 = p.b;
-					var a2 = p.a;
-					var this17 = _this14.tmp;
-					if(this17.pos == this17.array.length) {
-						var newSize16 = this17.array.length << 1;
-						if(newSize16 < 128) {
-							newSize16 = 128;
-						}
-						var newArray16 = new Float32Array(newSize16);
-						newArray16.set(this17.array);
-						this17.array = newArray16;
-					}
-					this17.array[this17.pos++] = x2;
-					var this18 = _this14.tmp;
-					if(this18.pos == this18.array.length) {
-						var newSize17 = this18.array.length << 1;
-						if(newSize17 < 128) {
-							newSize17 = 128;
-						}
-						var newArray17 = new Float32Array(newSize17);
-						newArray17.set(this18.array);
-						this18.array = newArray17;
-					}
-					this18.array[this18.pos++] = y2;
-					var this19 = _this14.tmp;
-					if(this19.pos == this19.array.length) {
-						var newSize18 = this19.array.length << 1;
-						if(newSize18 < 128) {
-							newSize18 = 128;
-						}
-						var newArray18 = new Float32Array(newSize18);
-						newArray18.set(this19.array);
-						this19.array = newArray18;
-					}
-					this19.array[this19.pos++] = 0;
-					var this20 = _this14.tmp;
-					if(this20.pos == this20.array.length) {
-						var newSize19 = this20.array.length << 1;
-						if(newSize19 < 128) {
-							newSize19 = 128;
-						}
-						var newArray19 = new Float32Array(newSize19);
-						newArray19.set(this20.array);
-						this20.array = newArray19;
-					}
-					this20.array[this20.pos++] = 0;
-					var this21 = _this14.tmp;
-					if(this21.pos == this21.array.length) {
-						var newSize20 = this21.array.length << 1;
-						if(newSize20 < 128) {
-							newSize20 = 128;
-						}
-						var newArray20 = new Float32Array(newSize20);
-						newArray20.set(this21.array);
-						this21.array = newArray20;
-					}
-					this21.array[this21.pos++] = r2;
-					var this22 = _this14.tmp;
-					if(this22.pos == this22.array.length) {
-						var newSize21 = this22.array.length << 1;
-						if(newSize21 < 128) {
-							newSize21 = 128;
-						}
-						var newArray21 = new Float32Array(newSize21);
-						newArray21.set(this22.array);
-						this22.array = newArray21;
-					}
-					this22.array[this22.pos++] = g2;
-					var this23 = _this14.tmp;
-					if(this23.pos == this23.array.length) {
-						var newSize22 = this23.array.length << 1;
-						if(newSize22 < 128) {
-							newSize22 = 128;
-						}
-						var newArray22 = new Float32Array(newSize22);
-						newArray22.set(this23.array);
-						this23.array = newArray22;
-					}
-					this23.array[this23.pos++] = b2;
-					var this24 = _this14.tmp;
-					if(this24.pos == this24.array.length) {
-						var newSize23 = this24.array.length << 1;
-						if(newSize23 < 128) {
-							newSize23 = 128;
-						}
-						var newArray23 = new Float32Array(newSize23);
-						newArray23.set(this24.array);
-						this24.array = newArray23;
-					}
-					this24.array[this24.pos++] = a2;
-					_this14.bufferDirty = true;
-					var _this15 = this.content;
-					var x3 = p.x - nnx;
-					var y3 = p.y - nny;
-					var r3 = p.r;
-					var g3 = p.g;
-					var b3 = p.b;
-					var a3 = p.a;
-					var this25 = _this15.tmp;
-					if(this25.pos == this25.array.length) {
-						var newSize24 = this25.array.length << 1;
-						if(newSize24 < 128) {
-							newSize24 = 128;
-						}
-						var newArray24 = new Float32Array(newSize24);
-						newArray24.set(this25.array);
-						this25.array = newArray24;
-					}
-					this25.array[this25.pos++] = x3;
-					var this26 = _this15.tmp;
-					if(this26.pos == this26.array.length) {
-						var newSize25 = this26.array.length << 1;
-						if(newSize25 < 128) {
-							newSize25 = 128;
-						}
-						var newArray25 = new Float32Array(newSize25);
-						newArray25.set(this26.array);
-						this26.array = newArray25;
-					}
-					this26.array[this26.pos++] = y3;
-					var this27 = _this15.tmp;
-					if(this27.pos == this27.array.length) {
-						var newSize26 = this27.array.length << 1;
-						if(newSize26 < 128) {
-							newSize26 = 128;
-						}
-						var newArray26 = new Float32Array(newSize26);
-						newArray26.set(this27.array);
-						this27.array = newArray26;
-					}
-					this27.array[this27.pos++] = 0;
-					var this28 = _this15.tmp;
-					if(this28.pos == this28.array.length) {
-						var newSize27 = this28.array.length << 1;
-						if(newSize27 < 128) {
-							newSize27 = 128;
-						}
-						var newArray27 = new Float32Array(newSize27);
-						newArray27.set(this28.array);
-						this28.array = newArray27;
-					}
-					this28.array[this28.pos++] = 0;
-					var this29 = _this15.tmp;
-					if(this29.pos == this29.array.length) {
-						var newSize28 = this29.array.length << 1;
-						if(newSize28 < 128) {
-							newSize28 = 128;
-						}
-						var newArray28 = new Float32Array(newSize28);
-						newArray28.set(this29.array);
-						this29.array = newArray28;
-					}
-					this29.array[this29.pos++] = r3;
-					var this30 = _this15.tmp;
-					if(this30.pos == this30.array.length) {
-						var newSize29 = this30.array.length << 1;
-						if(newSize29 < 128) {
-							newSize29 = 128;
-						}
-						var newArray29 = new Float32Array(newSize29);
-						newArray29.set(this30.array);
-						this30.array = newArray29;
-					}
-					this30.array[this30.pos++] = g3;
-					var this31 = _this15.tmp;
-					if(this31.pos == this31.array.length) {
-						var newSize30 = this31.array.length << 1;
-						if(newSize30 < 128) {
-							newSize30 = 128;
-						}
-						var newArray30 = new Float32Array(newSize30);
-						newArray30.set(this31.array);
-						this31.array = newArray30;
-					}
-					this31.array[this31.pos++] = b3;
-					var this32 = _this15.tmp;
-					if(this32.pos == this32.array.length) {
-						var newSize31 = this32.array.length << 1;
-						if(newSize31 < 128) {
-							newSize31 = 128;
-						}
-						var newArray31 = new Float32Array(newSize31);
-						newArray31.set(this32.array);
-						this32.array = newArray31;
-					}
-					this32.array[this32.pos++] = a3;
-					_this15.bufferDirty = true;
-					var _this16 = this.content;
-					var x4 = p.x + nnx;
-					var y4 = p.y + nny;
-					var r4 = p.r;
-					var g4 = p.g;
-					var b4 = p.b;
-					var a4 = p.a;
-					var this33 = _this16.tmp;
-					if(this33.pos == this33.array.length) {
-						var newSize32 = this33.array.length << 1;
-						if(newSize32 < 128) {
-							newSize32 = 128;
-						}
-						var newArray32 = new Float32Array(newSize32);
-						newArray32.set(this33.array);
-						this33.array = newArray32;
-					}
-					this33.array[this33.pos++] = x4;
-					var this34 = _this16.tmp;
-					if(this34.pos == this34.array.length) {
-						var newSize33 = this34.array.length << 1;
-						if(newSize33 < 128) {
-							newSize33 = 128;
-						}
-						var newArray33 = new Float32Array(newSize33);
-						newArray33.set(this34.array);
-						this34.array = newArray33;
-					}
-					this34.array[this34.pos++] = y4;
-					var this35 = _this16.tmp;
-					if(this35.pos == this35.array.length) {
-						var newSize34 = this35.array.length << 1;
-						if(newSize34 < 128) {
-							newSize34 = 128;
-						}
-						var newArray34 = new Float32Array(newSize34);
-						newArray34.set(this35.array);
-						this35.array = newArray34;
-					}
-					this35.array[this35.pos++] = 0;
-					var this36 = _this16.tmp;
-					if(this36.pos == this36.array.length) {
-						var newSize35 = this36.array.length << 1;
-						if(newSize35 < 128) {
-							newSize35 = 128;
-						}
-						var newArray35 = new Float32Array(newSize35);
-						newArray35.set(this36.array);
-						this36.array = newArray35;
-					}
-					this36.array[this36.pos++] = 0;
-					var this37 = _this16.tmp;
-					if(this37.pos == this37.array.length) {
-						var newSize36 = this37.array.length << 1;
-						if(newSize36 < 128) {
-							newSize36 = 128;
-						}
-						var newArray36 = new Float32Array(newSize36);
-						newArray36.set(this37.array);
-						this37.array = newArray36;
-					}
-					this37.array[this37.pos++] = r4;
-					var this38 = _this16.tmp;
-					if(this38.pos == this38.array.length) {
-						var newSize37 = this38.array.length << 1;
-						if(newSize37 < 128) {
-							newSize37 = 128;
-						}
-						var newArray37 = new Float32Array(newSize37);
-						newArray37.set(this38.array);
-						this38.array = newArray37;
-					}
-					this38.array[this38.pos++] = g4;
-					var this39 = _this16.tmp;
-					if(this39.pos == this39.array.length) {
-						var newSize38 = this39.array.length << 1;
-						if(newSize38 < 128) {
-							newSize38 = 128;
-						}
-						var newArray38 = new Float32Array(newSize38);
-						newArray38.set(this39.array);
-						this39.array = newArray38;
-					}
-					this39.array[this39.pos++] = b4;
-					var this40 = _this16.tmp;
-					if(this40.pos == this40.array.length) {
-						var newSize39 = this40.array.length << 1;
-						if(newSize39 < 128) {
-							newSize39 = 128;
-						}
-						var newArray39 = new Float32Array(newSize39);
-						newArray39.set(this40.array);
-						this40.array = newArray39;
-					}
-					this40.array[this40.pos++] = a4;
-					_this16.bufferDirty = true;
-					var _this17 = this.content;
-					_this17.index.push(this.pindex);
-					var _this18 = _this17.state;
-					_this18.tail.count += 1;
-					_this18.totalCount += 1;
-					_this17.indexDirty = true;
-					var _this19 = this.content;
-					_this19.index.push(pnext1);
-					var _this20 = _this19.state;
-					_this20.tail.count += 1;
-					_this20.totalCount += 1;
-					_this19.indexDirty = true;
-					var _this21 = this.content;
-					_this21.index.push(this.pindex + 2);
-					var _this22 = _this21.state;
-					_this22.tail.count += 1;
-					_this22.totalCount += 1;
-					_this21.indexDirty = true;
-					var _this23 = this.content;
-					_this23.index.push(this.pindex + 2);
-					var _this24 = _this23.state;
-					_this24.tail.count += 1;
-					_this24.totalCount += 1;
-					_this23.indexDirty = true;
-					var _this25 = this.content;
-					_this25.index.push(pnext1);
-					var _this26 = _this25.state;
-					_this26.tail.count += 1;
-					_this26.totalCount += 1;
-					_this25.indexDirty = true;
-					var _this27 = this.content;
-					_this27.index.push(pnext1 + 1);
-					var _this28 = _this27.state;
-					_this28.tail.count += 1;
-					_this28.totalCount += 1;
-					_this27.indexDirty = true;
-				} else {
-					var _this29 = this.content;
-					var x5 = p.x + nnx;
-					var y5 = p.y + nny;
-					var r5 = p.r;
-					var g5 = p.g;
-					var b5 = p.b;
-					var a5 = p.a;
-					var this41 = _this29.tmp;
-					if(this41.pos == this41.array.length) {
-						var newSize40 = this41.array.length << 1;
-						if(newSize40 < 128) {
-							newSize40 = 128;
-						}
-						var newArray40 = new Float32Array(newSize40);
-						newArray40.set(this41.array);
-						this41.array = newArray40;
-					}
-					this41.array[this41.pos++] = x5;
-					var this42 = _this29.tmp;
-					if(this42.pos == this42.array.length) {
-						var newSize41 = this42.array.length << 1;
-						if(newSize41 < 128) {
-							newSize41 = 128;
-						}
-						var newArray41 = new Float32Array(newSize41);
-						newArray41.set(this42.array);
-						this42.array = newArray41;
-					}
-					this42.array[this42.pos++] = y5;
-					var this43 = _this29.tmp;
-					if(this43.pos == this43.array.length) {
-						var newSize42 = this43.array.length << 1;
-						if(newSize42 < 128) {
-							newSize42 = 128;
-						}
-						var newArray42 = new Float32Array(newSize42);
-						newArray42.set(this43.array);
-						this43.array = newArray42;
-					}
-					this43.array[this43.pos++] = 0;
-					var this44 = _this29.tmp;
-					if(this44.pos == this44.array.length) {
-						var newSize43 = this44.array.length << 1;
-						if(newSize43 < 128) {
-							newSize43 = 128;
-						}
-						var newArray43 = new Float32Array(newSize43);
-						newArray43.set(this44.array);
-						this44.array = newArray43;
-					}
-					this44.array[this44.pos++] = 0;
-					var this45 = _this29.tmp;
-					if(this45.pos == this45.array.length) {
-						var newSize44 = this45.array.length << 1;
-						if(newSize44 < 128) {
-							newSize44 = 128;
-						}
-						var newArray44 = new Float32Array(newSize44);
-						newArray44.set(this45.array);
-						this45.array = newArray44;
-					}
-					this45.array[this45.pos++] = r5;
-					var this46 = _this29.tmp;
-					if(this46.pos == this46.array.length) {
-						var newSize45 = this46.array.length << 1;
-						if(newSize45 < 128) {
-							newSize45 = 128;
-						}
-						var newArray45 = new Float32Array(newSize45);
-						newArray45.set(this46.array);
-						this46.array = newArray45;
-					}
-					this46.array[this46.pos++] = g5;
-					var this47 = _this29.tmp;
-					if(this47.pos == this47.array.length) {
-						var newSize46 = this47.array.length << 1;
-						if(newSize46 < 128) {
-							newSize46 = 128;
-						}
-						var newArray46 = new Float32Array(newSize46);
-						newArray46.set(this47.array);
-						this47.array = newArray46;
-					}
-					this47.array[this47.pos++] = b5;
-					var this48 = _this29.tmp;
-					if(this48.pos == this48.array.length) {
-						var newSize47 = this48.array.length << 1;
-						if(newSize47 < 128) {
-							newSize47 = 128;
-						}
-						var newArray47 = new Float32Array(newSize47);
-						newArray47.set(this48.array);
-						this48.array = newArray47;
-					}
-					this48.array[this48.pos++] = a5;
-					_this29.bufferDirty = true;
-					var _this30 = this.content;
-					var x6 = p.x - nx;
-					var y6 = p.y - ny;
-					var r6 = p.r;
-					var g6 = p.g;
-					var b6 = p.b;
-					var a6 = p.a;
-					var this49 = _this30.tmp;
-					if(this49.pos == this49.array.length) {
-						var newSize48 = this49.array.length << 1;
-						if(newSize48 < 128) {
-							newSize48 = 128;
-						}
-						var newArray48 = new Float32Array(newSize48);
-						newArray48.set(this49.array);
-						this49.array = newArray48;
-					}
-					this49.array[this49.pos++] = x6;
-					var this50 = _this30.tmp;
-					if(this50.pos == this50.array.length) {
-						var newSize49 = this50.array.length << 1;
-						if(newSize49 < 128) {
-							newSize49 = 128;
-						}
-						var newArray49 = new Float32Array(newSize49);
-						newArray49.set(this50.array);
-						this50.array = newArray49;
-					}
-					this50.array[this50.pos++] = y6;
-					var this51 = _this30.tmp;
-					if(this51.pos == this51.array.length) {
-						var newSize50 = this51.array.length << 1;
-						if(newSize50 < 128) {
-							newSize50 = 128;
-						}
-						var newArray50 = new Float32Array(newSize50);
-						newArray50.set(this51.array);
-						this51.array = newArray50;
-					}
-					this51.array[this51.pos++] = 0;
-					var this52 = _this30.tmp;
-					if(this52.pos == this52.array.length) {
-						var newSize51 = this52.array.length << 1;
-						if(newSize51 < 128) {
-							newSize51 = 128;
-						}
-						var newArray51 = new Float32Array(newSize51);
-						newArray51.set(this52.array);
-						this52.array = newArray51;
-					}
-					this52.array[this52.pos++] = 0;
-					var this53 = _this30.tmp;
-					if(this53.pos == this53.array.length) {
-						var newSize52 = this53.array.length << 1;
-						if(newSize52 < 128) {
-							newSize52 = 128;
-						}
-						var newArray52 = new Float32Array(newSize52);
-						newArray52.set(this53.array);
-						this53.array = newArray52;
-					}
-					this53.array[this53.pos++] = r6;
-					var this54 = _this30.tmp;
-					if(this54.pos == this54.array.length) {
-						var newSize53 = this54.array.length << 1;
-						if(newSize53 < 128) {
-							newSize53 = 128;
-						}
-						var newArray53 = new Float32Array(newSize53);
-						newArray53.set(this54.array);
-						this54.array = newArray53;
-					}
-					this54.array[this54.pos++] = g6;
-					var this55 = _this30.tmp;
-					if(this55.pos == this55.array.length) {
-						var newSize54 = this55.array.length << 1;
-						if(newSize54 < 128) {
-							newSize54 = 128;
-						}
-						var newArray54 = new Float32Array(newSize54);
-						newArray54.set(this55.array);
-						this55.array = newArray54;
-					}
-					this55.array[this55.pos++] = b6;
-					var this56 = _this30.tmp;
-					if(this56.pos == this56.array.length) {
-						var newSize55 = this56.array.length << 1;
-						if(newSize55 < 128) {
-							newSize55 = 128;
-						}
-						var newArray55 = new Float32Array(newSize55);
-						newArray55.set(this56.array);
-						this56.array = newArray55;
-					}
-					this56.array[this56.pos++] = a6;
-					_this30.bufferDirty = true;
-					var _this31 = this.content;
-					var x7 = p.x - nnx;
-					var y7 = p.y - nny;
-					var r7 = p.r;
-					var g7 = p.g;
-					var b7 = p.b;
-					var a7 = p.a;
-					var this57 = _this31.tmp;
-					if(this57.pos == this57.array.length) {
-						var newSize56 = this57.array.length << 1;
-						if(newSize56 < 128) {
-							newSize56 = 128;
-						}
-						var newArray56 = new Float32Array(newSize56);
-						newArray56.set(this57.array);
-						this57.array = newArray56;
-					}
-					this57.array[this57.pos++] = x7;
-					var this58 = _this31.tmp;
-					if(this58.pos == this58.array.length) {
-						var newSize57 = this58.array.length << 1;
-						if(newSize57 < 128) {
-							newSize57 = 128;
-						}
-						var newArray57 = new Float32Array(newSize57);
-						newArray57.set(this58.array);
-						this58.array = newArray57;
-					}
-					this58.array[this58.pos++] = y7;
-					var this59 = _this31.tmp;
-					if(this59.pos == this59.array.length) {
-						var newSize58 = this59.array.length << 1;
-						if(newSize58 < 128) {
-							newSize58 = 128;
-						}
-						var newArray58 = new Float32Array(newSize58);
-						newArray58.set(this59.array);
-						this59.array = newArray58;
-					}
-					this59.array[this59.pos++] = 0;
-					var this60 = _this31.tmp;
-					if(this60.pos == this60.array.length) {
-						var newSize59 = this60.array.length << 1;
-						if(newSize59 < 128) {
-							newSize59 = 128;
-						}
-						var newArray59 = new Float32Array(newSize59);
-						newArray59.set(this60.array);
-						this60.array = newArray59;
-					}
-					this60.array[this60.pos++] = 0;
-					var this61 = _this31.tmp;
-					if(this61.pos == this61.array.length) {
-						var newSize60 = this61.array.length << 1;
-						if(newSize60 < 128) {
-							newSize60 = 128;
-						}
-						var newArray60 = new Float32Array(newSize60);
-						newArray60.set(this61.array);
-						this61.array = newArray60;
-					}
-					this61.array[this61.pos++] = r7;
-					var this62 = _this31.tmp;
-					if(this62.pos == this62.array.length) {
-						var newSize61 = this62.array.length << 1;
-						if(newSize61 < 128) {
-							newSize61 = 128;
-						}
-						var newArray61 = new Float32Array(newSize61);
-						newArray61.set(this62.array);
-						this62.array = newArray61;
-					}
-					this62.array[this62.pos++] = g7;
-					var this63 = _this31.tmp;
-					if(this63.pos == this63.array.length) {
-						var newSize62 = this63.array.length << 1;
-						if(newSize62 < 128) {
-							newSize62 = 128;
-						}
-						var newArray62 = new Float32Array(newSize62);
-						newArray62.set(this63.array);
-						this63.array = newArray62;
-					}
-					this63.array[this63.pos++] = b7;
-					var this64 = _this31.tmp;
-					if(this64.pos == this64.array.length) {
-						var newSize63 = this64.array.length << 1;
-						if(newSize63 < 128) {
-							newSize63 = 128;
-						}
-						var newArray63 = new Float32Array(newSize63);
-						newArray63.set(this64.array);
-						this64.array = newArray63;
-					}
-					this64.array[this64.pos++] = a7;
-					_this31.bufferDirty = true;
-					var _this32 = this.content;
-					_this32.index.push(this.pindex + 1);
-					var _this33 = _this32.state;
-					_this33.tail.count += 1;
-					_this33.totalCount += 1;
-					_this32.indexDirty = true;
-					var _this34 = this.content;
-					_this34.index.push(pnext1);
-					var _this35 = _this34.state;
-					_this35.tail.count += 1;
-					_this35.totalCount += 1;
-					_this34.indexDirty = true;
-					var _this36 = this.content;
-					_this36.index.push(this.pindex + 2);
-					var _this37 = _this36.state;
-					_this37.tail.count += 1;
-					_this37.totalCount += 1;
-					_this36.indexDirty = true;
-					var _this38 = this.content;
-					_this38.index.push(this.pindex + 1);
-					var _this39 = _this38.state;
-					_this39.tail.count += 1;
-					_this39.totalCount += 1;
-					_this38.indexDirty = true;
-					var _this40 = this.content;
-					_this40.index.push(pnext1);
-					var _this41 = _this40.state;
-					_this41.tail.count += 1;
-					_this41.totalCount += 1;
-					_this40.indexDirty = true;
-					var _this42 = this.content;
-					_this42.index.push(pnext1 + 1);
-					var _this43 = _this42.state;
-					_this43.tail.count += 1;
-					_this43.totalCount += 1;
-					_this42.indexDirty = true;
-				}
-				var _this44 = this.content;
-				_this44.index.push(this.pindex);
-				var _this45 = _this44.state;
-				_this45.tail.count += 1;
-				_this45.totalCount += 1;
-				_this44.indexDirty = true;
-				var _this46 = this.content;
-				_this46.index.push(this.pindex + 1);
-				var _this47 = _this46.state;
-				_this47.tail.count += 1;
-				_this47.totalCount += 1;
-				_this46.indexDirty = true;
-				var _this48 = this.content;
-				_this48.index.push(this.pindex + 2);
-				var _this49 = _this48.state;
-				_this49.tail.count += 1;
-				_this49.totalCount += 1;
-				_this48.indexDirty = true;
-				this.pindex += 3;
-			}
-			prev = p;
-			p = next;
-		}
-		this.content.setTile(this.tile);
-	}
-	,flushFill: function(i0) {
-		if(this.tmpPoints.length < 3) {
-			return;
-		}
-		var pts = this.tmpPoints;
-		var p0 = pts[0];
-		var p1 = pts[pts.length - 1];
-		var last = null;
-		var tmp;
-		var f = p0.x - p1.x;
-		if((f < 0 ? -f : f) < 1e-9) {
-			var f = p0.y - p1.y;
-			tmp = (f < 0 ? -f : f) < 1e-9;
-		} else {
-			tmp = false;
-		}
-		if(tmp) {
-			last = pts.pop();
-		}
-		if(this.isConvex(pts)) {
-			var _g = 1;
-			var _g1 = pts.length - 1;
-			while(_g < _g1) {
-				var i = _g++;
-				var _this = this.content;
-				_this.index.push(i0);
-				var _this1 = _this.state;
-				_this1.tail.count += 1;
-				_this1.totalCount += 1;
-				_this.indexDirty = true;
-				var _this2 = this.content;
-				_this2.index.push(i0 + i);
-				var _this3 = _this2.state;
-				_this3.tail.count += 1;
-				_this3.totalCount += 1;
-				_this2.indexDirty = true;
-				var _this4 = this.content;
-				_this4.index.push(i0 + i + 1);
-				var _this5 = _this4.state;
-				_this5.tail.count += 1;
-				_this5.totalCount += 1;
-				_this4.indexDirty = true;
-			}
-		} else {
-			var ear = h2d_Graphics.EARCUT;
-			if(ear == null) {
-				ear = new hxd_earcut_Earcut();
-				h2d_Graphics.EARCUT = ear;
-			}
-			var _g = 0;
-			var _g1 = ear.triangulate_h2d_GPoint(pts);
-			while(_g < _g1.length) {
-				var i = _g1[_g];
-				++_g;
-				var _this = this.content;
-				_this.index.push(i + i0);
-				var _this1 = _this.state;
-				_this1.tail.count += 1;
-				_this1.totalCount += 1;
-				_this.indexDirty = true;
-			}
-		}
-		if(last != null) {
-			pts.push(last);
-		}
-	}
-	,flush: function() {
-		if(this.tmpPoints.length == 0) {
-			return;
-		}
-		if(this.doFill) {
-			this.flushFill(this.pindex);
-			this.pindex += this.tmpPoints.length;
-			if(this.content.next()) {
-				this.pindex = 0;
-			}
-		}
-		if(this.lineSize > 0) {
-			this.flushLine(this.pindex);
-			if(this.content.next()) {
-				this.pindex = 0;
-			}
-		}
-		this.tmpPoints = [];
-	}
-	,lineStyle: function(size,color,alpha) {
-		if(alpha == null) {
-			alpha = 1.;
-		}
-		if(color == null) {
-			color = 0;
-		}
-		if(size == null) {
-			size = 0;
-		}
-		this.flush();
-		this.lineSize = size;
-		this.lineA = alpha;
-		this.lineR = (color >> 16 & 255) / 255.;
-		this.lineG = (color >> 8 & 255) / 255.;
-		this.lineB = (color & 255) / 255.;
-	}
-	,drawRect: function(x,y,w,h) {
-		this.flush();
-		this.addVertex(x,y,this.curR,this.curG,this.curB,this.curA,x * this.ma + y * this.mc + this.mx,x * this.mb + y * this.md + this.my);
-		var x1 = x + w;
-		this.addVertex(x1,y,this.curR,this.curG,this.curB,this.curA,x1 * this.ma + y * this.mc + this.mx,x1 * this.mb + y * this.md + this.my);
-		var x1 = x + w;
-		var y1 = y + h;
-		this.addVertex(x1,y1,this.curR,this.curG,this.curB,this.curA,x1 * this.ma + y1 * this.mc + this.mx,x1 * this.mb + y1 * this.md + this.my);
-		var y1 = y + h;
-		this.addVertex(x,y1,this.curR,this.curG,this.curB,this.curA,x * this.ma + y1 * this.mc + this.mx,x * this.mb + y1 * this.md + this.my);
-		this.addVertex(x,y,this.curR,this.curG,this.curB,this.curA,x * this.ma + y * this.mc + this.mx,x * this.mb + y * this.md + this.my);
-		var e = 0.01;
-		this.tmpPoints[0].x += e;
-		this.tmpPoints[0].y += e;
-		this.tmpPoints[1].y += e;
-		this.tmpPoints[3].x += e;
-		this.tmpPoints[4].x += e;
-		this.tmpPoints[4].y += e;
-		this.flush();
-	}
-	,addVertex: function(x,y,r,g,b,a,u,v) {
-		if(v == null) {
-			v = 0.;
-		}
-		if(u == null) {
-			u = 0.;
-		}
-		if(x < this.xMin) {
-			this.xMin = x;
-		}
-		if(y < this.yMin) {
-			this.yMin = y;
-		}
-		if(x > this.xMax) {
-			this.xMax = x;
-		}
-		if(y > this.yMax) {
-			this.yMax = y;
-		}
-		if(this.doFill) {
-			var _this = this.content;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = x;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = y;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = u;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = v;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = r;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = g;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = b;
-			var this1 = _this.tmp;
-			if(this1.pos == this1.array.length) {
-				var newSize = this1.array.length << 1;
-				if(newSize < 128) {
-					newSize = 128;
-				}
-				var newArray = new Float32Array(newSize);
-				newArray.set(this1.array);
-				this1.array = newArray;
-			}
-			this1.array[this1.pos++] = a;
-			_this.bufferDirty = true;
-		}
-		var gp = new h2d_GPoint();
-		gp.load(x,y,this.lineR,this.lineG,this.lineB,this.lineA);
-		this.tmpPoints.push(gp);
-	}
-	,draw: function(ctx) {
-		if(!ctx.beginDrawBatchState(this)) {
-			return;
-		}
-		this.content.doRender(ctx);
-	}
-	,sync: function(ctx) {
-		h2d_Drawable.prototype.sync.call(this,ctx);
-		this.flush();
-		this.content.flush();
-	}
-	,__class__: h2d_Graphics
-});
 var h2d_LineHeightMode = $hxEnums["h2d.LineHeightMode"] = { __ename__:true,__constructs__:null
 	,Accurate: {_hx_name:"Accurate",_hx_index:0,__enum__:"h2d.LineHeightMode",toString:$estr}
 	,TextOnly: {_hx_name:"TextOnly",_hx_index:1,__enum__:"h2d.LineHeightMode",toString:$estr}
@@ -51316,7 +51453,7 @@ var Bool = Boolean;
 var Class = { };
 var Enum = { };
 js_Boot.__toStr = ({ }).toString;
-haxe_Resource.content = [{ name : "R_m6x11_png", data : "iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAK+klEQVR4Xu3cUYplx7EFUA3B4/J4DP40/tJQPEy5D1Sg0FZk5jm6t4pu9VrQcPbekYW/SgUP3i+/AAA/t98+TF3vpy77vq36ad91ud3tL7VNN7ld+n66yf7S3965ye1yd7+b09P9bk61T053fZ9udtul79PNab88ucm+5P6uvOozT93dnHKvfLK6r37a72y963LPnKa9uml7smd/yS3zqb/UtrrZ7dmtcqp9utltZXfTt1f3XTdtaXXT35fVTfZdv9nd17a6+Vb989u//37795+Pf/+KfXz3J3lY+bP63bbq+9a7O336u+2nnJ7ud3OqfeV091X7nZvsy9P9XXnVZ566uznlXvlkuq+u222X3Cun3DOn3Cunu3u/6V3JbZWzX+3l6X7K6UfbM6fa07T3d2m6613qN6v76lPc/Pvbv3+0/Gvsf3pzy+lh7pnTtE9dN+27rsvtXTnlfsrp3XvmU5/y7mlOfV99fw956k55ZXWX/at51WeeulPuart7P5nup67kdsonp/vcX82rruS2ytnn/lU55Z455f695a626b53q37qUt9Xt9ln/ui2fwDclj88c8o9c5r2qeumPbvKKfd35ZT7Kad375lPfcq7nut7tU/6vvr+HvLUnfLK6i77V/Oqr1xd5t2byt20Vdf1/XST/WV6e8pdbe+8fzWn3Ff51KfTXe5PczrtKe+/OqfdPm3ZVe52911/k6a7Vf7o/AGQN13uq5xyr5xyX+Wutid73uaefv8Jf7zLPuVd5W53n/q++v4ecu/Sbu/vy2rL/pW8+s7b7rRf+k3erfrulb22vp9yyj1zyv3dOeW+yqc+re6qzy27Ve5qu7N3q5ver7Z35a62aV9tves33XSffW7pzl3c/Jh/AFS+86bfrHJX22q/7Pbpfe+63Fe5q+3Jnre5p99/wh/vsk95Vzn73LMvfV99vzOn3Fe5d13fn96c+lfy6rurftoufT/dnPqnedWV3H60vOpKbplPfVc3013f+p59edfeTVt/0z3d7+bsp+2y2no/fVfuVv2lb9NddSnvf/vR/wDoN5O8y9y7brddcr+bU+6nnJ7uT/OpT3lXudvdp76vvt+Zu9p296ub+s6bbrXf7V/Jq++87fpe7mzTnv3TvOpKbSn3pznlnjnd3ftN70p/063usi+7t91009+Wvne5n3L2uWWXuXddbnfzqb/UNu2973fd6k1uvU95s7v/2LZ/APTbrTzMnHLPnKZ96rppn7ou93fnlPspp6f703zqU971XN+rfdL31fdn5JR75qnLnFb73f6VvPruOffK3aq/PNme5lXX1d7l9jR3tf2V+zs3U9f1d2V1k/1l9y6d7p7up/y0z5xyf5pP/eXJVjn7NO39XcqbzEP/c/8BUDnl/q6ccj/l9HR/mp/2r+bU99X3Z+TU9/rO++wyp9V+t1/llPvue8qr7k4/bZfcnuZVt5K3r+T6Xu1TPpnup25ldXvqp+2SW+b0dD/lp/2781P1fvUzTvvK6l3vTnvPw932D4CP7vy/OX945pR75jTtU9dNe3aVuzv3mdNX75VTf9Plfsrp6X7KKffKq/5uTrlXTv1NyptTTrXn3apPu5vdlvJuetu7O316195velf6my73r8on03113W67fNWecu9vurt73q369O698l/tu7pZyfsy7b3b7Tsfd8c/AG7pP3TKKffMadqnrpv2qXvSr3JX252b7C/97ekm86S/y9vsVjnVPt1M2yr3rsut30/9Kfdut/Uu5dt8czd3tXV3tjs32V/62266OXV3+rTb+/s7N1NX+psy7V+VT1b31eee/WX3rtzdp5u+pbzp70q/n25yv9zZVjev7FP3V/pUd5O8LdPeu2nvfd+HfP0B8Otvv/9/AvzfH3/KTf2H9vxZ/W5b9X3r3a4HAAb1H87pP6BTP3XZ923VT/uuyy17AOCB3X9sAQAAAACAH1b/PwGUpzdPtu501/fpZtrybrrpcntXXvWZp65yyr1yl1vmbrd1q7vqU+753a36lHc977ZdTrUD/BTyl2D57L2c7r56f0deffece+XsutwrZz/d9i63Vb7bp92+e9+3ab/klt9Pcqod4KeUvwwzp9x3efX9zty7brddcn8lr77ztut7d+fmsrvbbWW66V3X352s3vW+2+39fd1M31MGYNB/yZbc+n3X33S5774/I6fau2l/R159d9VPW7lzc7lzt7tZbb3v+s1OvrvkdjcD8Gb1izbl3t90/U2X++77M/Kkbrrc3pFX313103Y57d2d29XNqu9We3/b5Z7fAHwH8hfzKacn++r7M/JJ3t/NKffdd952q733O7s3q23Vp9VNf9/lHQDfofzlXd69776f5JR75dTfdHf36Wa3peluytl1uVfOfrrtXW6rDMDfXP3i796197z6vpN7t9t61/V35XST++XOlqabXVc55V65yy3zzpNbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC+zP8BvYeLvJn4ggMAAAAASUVORK5CYII"},{ name : "R_m6x11_fnt", data : "QkZOVAABBQBtNngxMRAACQBtNngxMS5wbmcQAAsAPwAAAG8AAAAqABAACAAKAP//AgAHAAAAAABKAAAAgAAAAAgADQD/////BwAAAAAAJQAAAH8AEAAIAAoA//8BAAcAAAAAAHAAAABGAQAACAANAP//AgAHAAAAAABLAAAAiAAAAAgADQD/////BwAAAAAAJgAAAOYBAAALAA0A/////woAAAAAAHEAAABOAQAACAANAP//AgAHAAAAAABMAAAAkAAAAAgADQD/////BwAAAAAAJwAAALUAEAAEAAUA/////wMAAAAAAHIAAAAyABAACAAKAP//AgAHAAAAAABNAAAAmAAAAAoADQD/////CQAAAAAAKAAAAAYAAAAGAA8A/////wUAAAAAAHMAAAA6ABAACAAKAP//AgAHAAAAAABOAAAAogAAAAgADQD/////BwAAAAAAKQAAAAwAAAAGAA8A/////wUAAAAAAHQAAABWAQAACAANAP////8HAAAAAABPAAAAqgAAAAgADQD/////BwAAAAAAKgAAAJcAEAAHAAcA/////wYAAAAAAHUAAABCABAACAAKAP//AgAHAAAAAABQAAAAsgAAAAgADQD/////BwAAAAAAKwAAAIcAEAAIAAgA//8CAAcAAAAAAHYAAABKABAACAAKAP//AgAHAAAAAABRAAAAugAAAAkADQD/////CAAAAAAALAAAALUAEAAEAAUA//8IAAMAAAAAAHcAAABSABAACgAKAP//AgAJAAAAAABSAAAAwwAAAAgADQD/////BwAAAAAALQAAAL0AEAAIAAQA//8EAAcAAAAAAHgAAABcABAACQAKAP//AgAIAAAAAABTAAAAywAAAAgADQD/////BwAAAAAALgAAALkAEAAEAAQA//8IAAMAAAAAAHkAAABeAQAACAANAP//AgAHAAAAAABUAAAA0wAAAAgADQD/////BwAAAAAALwAAAMIBAAAIAA0A/////wcAAAAAAAoAAAAAAAAAAAAAAP//AAAAAAAAAAB6AAAAZQAQAAgACgD//wIABwAAAAAAMAAAAK4BAAAIAA0A/////wcAAAAAAFUAAADbAAAACAANAP////8HAAAAAAB7AAAAHgAAAAcADwD/////BgAAAAAAMQAAAGYBAAAIAA0A/////wcAAAAAAFYAAADjAAAACAANAP////8HAAAAAAB8AAAALAAAAAQADwD/////AwAAAAAAMgAAAG4BAAAIAA0A/////wcAAAAAAFcAAADrAAAACgANAP////8JAAAAAAB9AAAAJQAAAAcADwD/////BgAAAAAAWAAAAPUAAAAJAA0A/////wgAAAAAADMAAAB2AQAACAANAP////8HAAAAAAB+AAAApgAQAAgABgD//wMABwAAAAAAWQAAAP4AAAAIAA0A/////wcAAAAAADQAAAB+AQAACAANAP////8HAAAAAABaAAAABgEAAAgADQD/////BwAAAAAANQAAAIYBAAAIAA0A/////wcAAAAAAFsAAAASAAAABgAPAP////8FAAAAAAA2AAAAjgEAAAgADQD/////BwAAAAAAXAAAANUBAAAIAA0A/////wcAAAAAADcAAACWAQAACAANAP////8HAAAAAABdAAAAGAAAAAYADwD/////BQAAAAAAOAAAAJ4BAAAIAA0A/////wcAAAAAAF4AAACeABAACAAGAP////8HAAAAAAA5AAAApgEAAAgADQD/////BwAAAAAAXwAAAL0AEAAIAAQA//8IAAcAAAAAADoAAABtABAABAAKAP//AgADAAAAAABgAAAAtQAQAAQABQD/////AwAAAAAAOwAAAPgBAAAEAAsA//8CAAMAAAAAAGEAAAAAABAACAAKAP//AgAHAAAAAAA8AAAAcQAQAAcACgD//wIABgAAAAAAYgAAAA4BAAAIAA0A/////wcAAAAAAD0AAACPABAACAAIAP//AgAHAAAAAABjAAAACAAQAAgACgD//wIABwAAAAAAPgAAAHgAEAAHAAoA//8CAAYAAAAAAGQAAAAWAQAACAANAP////8HAAAAAAA/AAAAugEAAAgADQD/////BwAAAAAAZQAAABAAEAAIAAoA//8CAAcAAAAAAEAAAADKAQAACwANAP////8KAAAAAABmAAAAHgEAAAgADQD/////BwAAAAAAQQAAADgAAAAIAA0A/////wcAAAAAAGcAAAAmAQAACAANAP//AgAHAAAAAABCAAAAQAAAAAgADQD/////BwAAAAAAaAAAAC4BAAAIAA0A/////wcAAAAAAEMAAABIAAAACAANAP////8HAAAAAABpAAAANgEAAAQADQD/////AwAAAAAARAAAAFAAAAAIAA0A/////wcAAAAAAGoAAAAAAAAABgAQAP////8FAAAAAAAgAAAAAAAAAAAAAAD//wAABQAAAAAARQAAAFgAAAAIAA0A/////wcAAAAAAGsAAAA6AQAACAANAP////8HAAAAAAAhAAAAtgEAAAQADQD/////AwAAAAAARgAAAGAAAAAIAA0A/////wcAAAAAAGwAAABCAQAABAANAP////8DAAAAAABHAAAAaAAAAAgADQD/////BwAAAAAAIgAAAK4AEAAHAAUA/////wYAAAAAAG0AAAAYABAACgAKAP//AgAJAAAAAABIAAAAcAAAAAgADQD/////BwAAAAAAIwAAAN0BAAAJAA0A/////wgAAAAAAG4AAAAiABAACAAKAP//AgAHAAAAAABJAAAAeAAAAAgADQD/////BwAAAAAAJAAAADAAAAAIAA4A/////wcAAAAAAAAAAAA"},{ name : "R_style_css", data : "LyogUG9zaXRpb25zICovDQouZ3JpZC10b3AtMSB7DQogICAgeDoxMjg7DQogICAgeTo5NjsNCn0NCg0KLmdyaWQtdG9wLTIgew0KICAgIHg6Mzg0Ow0KICAgIHk6OTY7DQp9DQoNCi5ncmlkLXRvcC0zIHsNCiAgICB4OjY0MDsNCiAgICB5Ojk2Ow0KfQ0KDQouZ3JpZC1taWQtMSB7DQogICAgeDoxMjg7DQogICAgeToyODg7DQp9DQoNCi5ncmlkLW1pZC0yIHsNCiAgICB4OjM4NDsNCiAgICB5OjI4ODsNCn0NCg0KLmdyaWQtbWlkLTMgew0KICAgIHg6NjQwOw0KICAgIHk6Mjg4Ow0KfQ0KDQouZ3JpZC1ib3QtMSB7DQogICAgeDoxMjg7DQogICAgeTo0ODA7DQp9DQoNCi5ncmlkLWJvdC0yIHsNCiAgICB4OjM4NDsNCiAgICB5OjQ4MDsNCn0NCg0KLmdyaWQtYm90LTMgew0KICAgIHg6NjQwOw0KICAgIHk6NDgwOw0KfQ0KDQouZ3JpZC1ob2xkZXIgew0KICAgIG1heC13aWR0aDogMjU2Ow0KICAgIG1pbi13aWR0aDogMjU2Ow0KICAgIA0KICAgIGxheW91dDp2ZXJ0aWNhbDsNCiAgICB2c3BhY2luZzoxMDsNCiAgICBtdWx0aWxpbmU6dHJ1ZTsNCn0NCg0KLmdyaWQtY2VudGVyLXRleHQgew0KICAgIG1heC13aWR0aDoyNTY7DQogICAgdGV4dC1hbGlnbjogY2VudGVyOw0KfQ0KDQojcmVzaXplTmVzdGVkIHsNCiAgICBzY2FsZS14OjAuMjsNCiAgICBzY2FsZS15OjAuMjsNCiAgICB0cmFuc2l0aW9uOnNjYWxlLXg7DQogICAgdHJhbnNpdGlvbjpzY2FsZS15Ow0KDQp9DQoNCiNyZXNpemVOZXN0ZWQuYmlnIHsNCiAgICBzY2FsZS14OjEuMDsNCiAgICBzY2FsZS15OjEuMDsNCiAgICB0cmFuc2l0aW9uOnNjYWxlLXg7DQogICAgdHJhbnNpdGlvbjpzY2FsZS15Ow0KfQ0KDQojZmlsdGVyZWROZXN0ZWQuZmlsdGVyZWQgew0KICAgIGZpbHRlcjogZ3JheXNjYWxlKCkgYmx1cigyKTsNCn0NCg0KDQojaGVscFRleHQgew0KICAgIHk6NzAwOw0KICAgIHg6MDsNCiAgICBtYXgtd2lkdGg6MTAyNDsNCiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7DQp9DQoNCiAgLyogPG5lc3RlZD4gc3R5bGVzICovDQoNCg0KbmVzdGVkIHsNCiAgICBwYWRkaW5nOjEwOw0KICAgIHdpZHRoOjEwMDsNCiAgICBoZWlnaHQ6MTAwOw0KICAgIGJhY2tncm91bmQ6IHllbGxvdzsNCn0NCg0KDQpuZXN0ZWQgbmVzdGVkIHsNCiAgICB4OjEwOw0KICAgIHk6MTA7DQogICAgd2lkdGg6ODA7DQogICAgaGVpZ2h0OjgwOw0KICAgIGJhY2tncm91bmQ6IHJlZDsNCn0NCg0KbmVzdGVkIG5lc3RlZCBuZXN0ZWR7DQogICAgeDoxMDsNCiAgICB5OjEwOw0KICAgIHdpZHRoOjYwOw0KICAgIGhlaWdodDo2MDsNCiAgICBiYWNrZ3JvdW5kOiBibHVlOw0KfQ0KDQpuZXN0ZWQgbmVzdGVkIG5lc3RlZCBuZXN0ZWR7DQogICAgeDoxMDsNCiAgICB5OjEwOw0KICAgIHdpZHRoOjQwOw0KICAgIGhlaWdodDo0MDsNCiAgICBiYWNrZ3JvdW5kOiBncmVlbjsNCn0NCg0KbmVzdGVkIG5lc3RlZCBuZXN0ZWQgbmVzdGVkIG5lc3RlZHsNCiAgICB4OjEwOw0KICAgIHk6MTA7DQogICAgd2lkdGg6MjA7DQogICAgaGVpZ2h0OjIwOw0KICAgIGJhY2tncm91bmQ6IHdoaXRlOw0KfQ0KDQogIC8qIDxidXR0b24+IHN0eWxlcyAqLw0KDQpidXR0b24gew0KICAgIG1pbi13aWR0aDoxMDA7DQogICAgaGVpZ2h0OjMwOw0KICAgIGJhY2tncm91bmQ6cmVkOw0KICAgIGN1cnNvcjpidXR0b247DQogICAgcGFkZGluZzo1Ow0KfQ0KYnV0dG9uIHRleHQgew0KICAgIGFsaWduOiBtaWRkbGUgbWlkZGxlOw0KICAgIA0KfQ0KDQpidXR0b246aG92ZXIgew0KICAgIGZpbHRlcjpicmlnaHRuZXNzKDAuNSk7DQp9DQoNCmJ1dHRvbjphY3RpdmUgew0KICAgIGJhY2tncm91bmQ6Z3JlZW47DQp9DQoNCi8qIDxiaXRtYXAgaWQ9ImJpdG1hcDEiLz4gKi8NCg0KI2JpdG1hcDEgew0KICAgIHg6NTUwOw0KICAgIHk6MzA7DQogICAgLyogY3VzdG9tIENTUyBwYXJzZXIgcHJvcGVydHk6IFNlZSBNeUN1c3RvbUNTU1BhcnNlci5oeCAqLw0KICAgIHNyYzogcGVybGluKDMwMCwgMzAwLCAyMC4wLCByZWQpOw0KfQ0KDQovKiA8c3F1YXJlcz4gKi8NCg0KI2FuaW1hdGlvblNxdWFyZXMgew0KICAgIHNjYWxlOjE7DQogICAgdHJhbnNpdGlvbjpyb3RhdGlvbjsNCiAgICANCn0NCg0KI2FuaW1hdGlvblNxdWFyZXMucm90YXRlIHsNCiAgICByb3RhdGlvbjoxODA7DQogICAgdHJhbnNpdGlvbjpyb3RhdGlvbjsNCn0NCg0Kc3F1YXJlcyB7DQogICAgbXVsdGlsaW5lOiB0cnVlOw0KICAgIG1heC13aWR0aDoxNDA7DQp9DQoNCiNmaWx0ZXJTcXVhcmVzLmZpbHRlcmVkew0KICAgIGZpbHRlcjpvdXRsaW5lKDgsIHdoaXRlKSBzYXR1cmF0ZSgxMDApOw0KfQ0KDQpzcXVhcmVzIGJpdG1hcC5zcXVhcmUxIHsNCiAgICAvKiBjdXN0b20gQ1NTIHByb3BlcnR5LCBzZWUgTXlDdXN0b21Dc3NQYXJzZXIgKi8NCiAgICBzcmM6IHBlcmxpbig2NCwgNjQsIDUuMCwgcmVkKTsNCn0NCg0Kc3F1YXJlcyBiaXRtYXAuc3F1YXJlMiB7DQogICAgLyogY3VzdG9tIENTUyBwcm9wZXJ0eSwgc2VlIE15Q3VzdG9tQ3NzUGFyc2VyICovDQogICAgc3JjOiBwZXJsaW4oNjQsIDY0LCAxMC4wLCBncmVlbik7DQp9DQpzcXVhcmVzIGJpdG1hcC5zcXVhcmUzIHsNCiAgICAvKiBjdXN0b20gQ1NTIHByb3BlcnR5LCBzZWUgTXlDdXN0b21Dc3NQYXJzZXIgKi8NCiAgICBzcmM6IHBlcmxpbig2NCwgNjQsIDMwLjAsIGJsdWUpOw0KfQ0Kc3F1YXJlcyBiaXRtYXAuc3F1YXJlNCB7DQogICAgLyogY3VzdG9tIENTUyBwcm9wZXJ0eSwgc2VlIE15Q3VzdG9tQ3NzUGFyc2VyICovDQogICAgc3JjOiBwZXJsaW4oNjQsIDY0LCAxMDAuMCwgYWxsKTsNCn0NCg0KI3RpdGxlVGV4dCB7DQogICAgbWF4LXdpZHRoOjEwMjQ7DQogICAgdGV4dC1hbGlnbjogY2VudGVyOw0KICAgIHk6MTA7DQp9DQoNCiNuZXh0QnV0dG9uIHsNCiAgICB4OjgwMDsNCiAgICB5OjcwMDsNCiAgICBmaWx0ZXI6Z3JheXNjYWxlKDAuNSkgb3V0bGluZSgxLCB3aGl0ZSk7DQp9DQoNCiNwcmV2QnV0dG9uIHsNCiAgICB4OjEwMDsNCiAgICB5OjcwMDsNCiAgICBmaWx0ZXI6Z3JheXNjYWxlKDAuNSkgb3V0bGluZSgxLCB3aGl0ZSk7DQogICAgDQp9DQoNCg0KDQoNCi8qIHNjcmVlbiAzICovDQoNCiNsaXN0IHsNCiAgICB2ZXJ0aWNhbDp0cnVlOw0KICAgIG1pbi13aWR0aDoxMDA7DQogICAgbWluLWhlaWdodDoxMDA7DQogICAgYmFja2dyb3VuZDogcmVkOw0KICAgIHZzcGFjaW5nOjM7DQp9DQppdGVtIHsNCiAgICBtaW4td2lkdGg6MTAwOw0KICAgIG1pbi1oZWlnaHQ6MTA7DQogICAgcGFkZGluZzo1Ow0KICAgIGJhY2tncm91bmQ6IGdyYXk7DQogICAgYWxwaGE6MDsNCiAgICB0cmFuc2l0aW9uOiBhbHBoYSAxczsNCiAgICANCn0NCml0ZW0uYWRkZWQgew0KICAgIHRyYW5zaXRpb246IGFscGhhIDFzOw0KICAgIGFscGhhOjE7DQp9DQoNCml0ZW06b2RkIHRleHQgew0KICAgIC8qIGN1c3RvbSBDU1MgcHJvcGVydHksIHNlZSBNeUN1c3RvbUNzc1BhcnNlciAqLw0KICAgIGZvbnQ6bXlmb250KG02eDExKTsNCn0NCg0KLyogaXRlbTpmaXJzdC1jaGlsZCB0ZXh0IHsNCiAgICBjb2xvcjp5ZWxsb3c7IA0KfQ0KDQoNCml0ZW06bGFzdC1jaGlsZCB0ZXh0ICB7DQogICAgY29sb3I6YmxhY2s7DQp9ICovDQoNCg0KaXRlbTpldmVuIHsNCiAgICBmaWx0ZXI6YnJpZ2h0bmVzcygwLjIpOw0KfQ0KDQoNCml0ZW0gdGV4dCB7DQogICAgY29sb3I6d2hpdGU7DQogICAgdGV4dC1zaGFkb3c6ICAxIDEgYmxhY2sgMC41Ow0KICAgIGhhbGlnbjptaWRkbGU7DQogICAgDQp9DQoNCi5idXR0b24tbGlzdCB7DQogICAgcGFkZGluZzo1cHg7DQogICAgdnNwYWNpbmc6NXB4Ow0KfQ0KDQoNCi8qIHNjcmVlbiA0ICAqLw0KDQpmbG93U2FtcGxlIHsNCiAgICBkZWJ1Zzp0cnVlOw0KfQ0KDQpmbG93SXRlbSB7DQogICAgd2lkdGg6NDA7IA0KICAgIGhlaWdodDo0MDsNCiAgICBiYWNrZ3JvdW5kOmdyZWVuOw0KfQ0KDQojZmxvd1NhbXBsZTEgew0KICAgIGxheW91dDp2ZXJ0aWNhbDsgDQp9DQoNCiNmbG93U2FtcGxlMiB7DQogICAgbGF5b3V0Omhvcml6b250YWw7IA0KfQ0KDQojZmxvd1NhbXBsZTMgew0KICAgIGxheW91dDpzdGFjazsgIA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tMSAgew0KICAgIHNjYWxlOjM7DQp9DQojZmxvd1NhbXBsZTMgLmZsb3ctaXRlbS0yIHsNCiAgICBzY2FsZToyLjU7DQogICAgYmFja2dyb3VuZDpyZWQ7IA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tMyB7DQogICAgc2NhbGU6MjsNCiAgICBiYWNrZ3JvdW5kOmJsdWU7IA0KfQ0KDQojZmxvd1NhbXBsZTMgZmxvd0l0ZW0uZmxvdy1pdGVtLTQgew0KICAgIHNjYWxlOjEuNTsNCiAgICBiYWNrZ3JvdW5kOnllbGxvdzsgIA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tNSB7DQogICAgc2NhbGU6MTsNCn0NCg0KLyogI2Zsb3dTYW1wbGUzIGZsb3dJdGVtOmZpcnN0LWNoaWxkIHsNCiAgICBzY2FsZToyOw0KICAgIGJhY2tncm91bmQ6Ymx1ZTsNCn0gKi8NCg0KLyogIERvZXMgbm90IHdvcms/DQoNCiNmbG93U2FtcGxlMyBmbG93SXRlbTpsYXN0LWNoaWxkIHsNCiAgICBzY2FsZTo0Ow0KICAgIGJhY2tncm91bmQ6Z3JheTsNCn0gKi8NCg0KLyogU2NyZWVuIDUgKi8NCg0Kc2VsZWN0b3IgdGV4dHsNCg0KICAgIGNvbG9yOmJsdWU7DQp9DQoNCm51bSB7DQogICAgYmFja2dyb3VuZDpncmF5Ow0KICAgIGxheW91dDp2ZXJ0aWNhbDsNCiAgICANCn0NCg0KdHggew0KICAgIGJhY2tncm91bmQ6Z3JheTsNCiAgICBsYXlvdXQ6dmVydGljYWw7DQogICAgDQp9DQpudW0gdGV4dCB7DQogICAgY29sb3I6I2NjYzsNCn0NCiNpZDEgbnVtIG51bSBudW0gdGV4dCB7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkMiA+IG51bSA+IG51bSA+IG51bSA+IHRleHQgew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCg0KI2lkMyA+IG51bSA+IHRleHR7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkNCBudW0gIHRleHQgew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDUgbnVtIG51bSAqOmV2ZW4gdGV4dCB7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkNiAuQSAuQiAuQyB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDcgLkEgLkIgLkMuRCB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDggIHR4ICB0eCAuQyB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDkgIHR4LkMgew0KICAgIGJhY2tncm91bmQ6IzJGMiAwLjU7DQp9DQoNCiNpZDEwIG51bSBudW0gbnVtIG51bTpldmVuIHRleHR7IA0KICAgIGNvbG9yOiMyRjI7IA0KfQ0KDQojaWQxMCBudW0gbnVtIG51bSBudW06b2RkIHRleHR7IA0KICAgIGNvbG9yOiNGRjI7IA0KfQ0KIA0KI2lkMTEgPiBudW0gPiBudW0gPiB0ZXh0eyANCiAgICBjb2xvcjpyZWQ7IA0KfQ0KDQojaWQxMSBudW0gbnVtIG51bSB0ZXh0eyANCiAgICBjb2xvcjpvcmFuZ2U7IA0KfQ0KDQoNCiNpZDEyIG51bSB7IA0KICAgIGJhY2tncm91bmQ6Ymx1ZSAwLjU7DQp9DQo"}];
+haxe_Resource.content = [{ name : "R_m6x11_png", data : "iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAK+klEQVR4Xu3cUYplx7EFUA3B4/J4DP40/tJQPEy5D1Sg0FZk5jm6t4pu9VrQcPbekYW/SgUP3i+/AAA/t98+TF3vpy77vq36ad91ud3tL7VNN7ld+n66yf7S3965ye1yd7+b09P9bk61T053fZ9udtul79PNab88ucm+5P6uvOozT93dnHKvfLK6r37a72y963LPnKa9uml7smd/yS3zqb/UtrrZ7dmtcqp9utltZXfTt1f3XTdtaXXT35fVTfZdv9nd17a6+Vb989u//37795+Pf/+KfXz3J3lY+bP63bbq+9a7O336u+2nnJ7ud3OqfeV091X7nZvsy9P9XXnVZ566uznlXvlkuq+u222X3Cun3DOn3Cunu3u/6V3JbZWzX+3l6X7K6UfbM6fa07T3d2m6613qN6v76lPc/Pvbv3+0/Gvsf3pzy+lh7pnTtE9dN+27rsvtXTnlfsrp3XvmU5/y7mlOfV99fw956k55ZXWX/at51WeeulPuart7P5nup67kdsonp/vcX82rruS2ytnn/lU55Z455f695a626b53q37qUt9Xt9ln/ui2fwDclj88c8o9c5r2qeumPbvKKfd35ZT7Kad375lPfcq7nut7tU/6vvr+HvLUnfLK6i77V/Oqr1xd5t2byt20Vdf1/XST/WV6e8pdbe+8fzWn3Ff51KfTXe5PczrtKe+/OqfdPm3ZVe52911/k6a7Vf7o/AGQN13uq5xyr5xyX+Wutid73uaefv8Jf7zLPuVd5W53n/q++v4ecu/Sbu/vy2rL/pW8+s7b7rRf+k3erfrulb22vp9yyj1zyv3dOeW+yqc+re6qzy27Ve5qu7N3q5ver7Z35a62aV9tves33XSffW7pzl3c/Jh/AFS+86bfrHJX22q/7Pbpfe+63Fe5q+3Jnre5p99/wh/vsk95Vzn73LMvfV99vzOn3Fe5d13fn96c+lfy6rurftoufT/dnPqnedWV3H60vOpKbplPfVc3013f+p59edfeTVt/0z3d7+bsp+2y2no/fVfuVv2lb9NddSnvf/vR/wDoN5O8y9y7brddcr+bU+6nnJ7uT/OpT3lXudvdp76vvt+Zu9p296ub+s6bbrXf7V/Jq++87fpe7mzTnv3TvOpKbSn3pznlnjnd3ftN70p/063usi+7t91009+Wvne5n3L2uWWXuXddbnfzqb/UNu2973fd6k1uvU95s7v/2LZ/APTbrTzMnHLPnKZ96rppn7ou93fnlPspp6f703zqU971XN+rfdL31fdn5JR75qnLnFb73f6VvPruOffK3aq/PNme5lXX1d7l9jR3tf2V+zs3U9f1d2V1k/1l9y6d7p7up/y0z5xyf5pP/eXJVjn7NO39XcqbzEP/c/8BUDnl/q6ccj/l9HR/mp/2r+bU99X3Z+TU9/rO++wyp9V+t1/llPvue8qr7k4/bZfcnuZVt5K3r+T6Xu1TPpnup25ldXvqp+2SW+b0dD/lp/2781P1fvUzTvvK6l3vTnvPw932D4CP7vy/OX945pR75jTtU9dNe3aVuzv3mdNX75VTf9Plfsrp6X7KKffKq/5uTrlXTv1NyptTTrXn3apPu5vdlvJuetu7O316195velf6my73r8on03113W67fNWecu9vurt73q369O698l/tu7pZyfsy7b3b7Tsfd8c/AG7pP3TKKffMadqnrpv2qXvSr3JX252b7C/97ekm86S/y9vsVjnVPt1M2yr3rsut30/9Kfdut/Uu5dt8czd3tXV3tjs32V/62266OXV3+rTb+/s7N1NX+psy7V+VT1b31eee/WX3rtzdp5u+pbzp70q/n25yv9zZVjev7FP3V/pUd5O8LdPeu2nvfd+HfP0B8Otvv/9/AvzfH3/KTf2H9vxZ/W5b9X3r3a4HAAb1H87pP6BTP3XZ923VT/uuyy17AOCB3X9sAQAAAACAH1b/PwGUpzdPtu501/fpZtrybrrpcntXXvWZp65yyr1yl1vmbrd1q7vqU+753a36lHc977ZdTrUD/BTyl2D57L2c7r56f0deffece+XsutwrZz/d9i63Vb7bp92+e9+3ab/klt9Pcqod4KeUvwwzp9x3efX9zty7brddcn8lr77ztut7d+fmsrvbbWW66V3X352s3vW+2+39fd1M31MGYNB/yZbc+n3X33S5774/I6fau2l/R159d9VPW7lzc7lzt7tZbb3v+s1OvrvkdjcD8Gb1izbl3t90/U2X++77M/Kkbrrc3pFX313103Y57d2d29XNqu9We3/b5Z7fAHwH8hfzKacn++r7M/JJ3t/NKffdd952q733O7s3q23Vp9VNf9/lHQDfofzlXd69776f5JR75dTfdHf36Wa3peluytl1uVfOfrrtXW6rDMDfXP3i796197z6vpN7t9t61/V35XST++XOlqabXVc55V65yy3zzpNbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC+zP8BvYeLvJn4ggMAAAAASUVORK5CYII"},{ name : "R_m6x11_fnt", data : "QkZOVAABBQBtNngxMRAACQBtNngxMS5wbmcQAAsAPwAAAG8AAAAqABAACAAKAP//AgAHAAAAAABKAAAAgAAAAAgADQD/////BwAAAAAAJQAAAH8AEAAIAAoA//8BAAcAAAAAAHAAAABGAQAACAANAP//AgAHAAAAAABLAAAAiAAAAAgADQD/////BwAAAAAAJgAAAOYBAAALAA0A/////woAAAAAAHEAAABOAQAACAANAP//AgAHAAAAAABMAAAAkAAAAAgADQD/////BwAAAAAAJwAAALUAEAAEAAUA/////wMAAAAAAHIAAAAyABAACAAKAP//AgAHAAAAAABNAAAAmAAAAAoADQD/////CQAAAAAAKAAAAAYAAAAGAA8A/////wUAAAAAAHMAAAA6ABAACAAKAP//AgAHAAAAAABOAAAAogAAAAgADQD/////BwAAAAAAKQAAAAwAAAAGAA8A/////wUAAAAAAHQAAABWAQAACAANAP////8HAAAAAABPAAAAqgAAAAgADQD/////BwAAAAAAKgAAAJcAEAAHAAcA/////wYAAAAAAHUAAABCABAACAAKAP//AgAHAAAAAABQAAAAsgAAAAgADQD/////BwAAAAAAKwAAAIcAEAAIAAgA//8CAAcAAAAAAHYAAABKABAACAAKAP//AgAHAAAAAABRAAAAugAAAAkADQD/////CAAAAAAALAAAALUAEAAEAAUA//8IAAMAAAAAAHcAAABSABAACgAKAP//AgAJAAAAAABSAAAAwwAAAAgADQD/////BwAAAAAALQAAAL0AEAAIAAQA//8EAAcAAAAAAHgAAABcABAACQAKAP//AgAIAAAAAABTAAAAywAAAAgADQD/////BwAAAAAALgAAALkAEAAEAAQA//8IAAMAAAAAAHkAAABeAQAACAANAP//AgAHAAAAAABUAAAA0wAAAAgADQD/////BwAAAAAALwAAAMIBAAAIAA0A/////wcAAAAAAAoAAAAAAAAAAAAAAP//AAAAAAAAAAB6AAAAZQAQAAgACgD//wIABwAAAAAAMAAAAK4BAAAIAA0A/////wcAAAAAAFUAAADbAAAACAANAP////8HAAAAAAB7AAAAHgAAAAcADwD/////BgAAAAAAMQAAAGYBAAAIAA0A/////wcAAAAAAFYAAADjAAAACAANAP////8HAAAAAAB8AAAALAAAAAQADwD/////AwAAAAAAMgAAAG4BAAAIAA0A/////wcAAAAAAFcAAADrAAAACgANAP////8JAAAAAAB9AAAAJQAAAAcADwD/////BgAAAAAAWAAAAPUAAAAJAA0A/////wgAAAAAADMAAAB2AQAACAANAP////8HAAAAAAB+AAAApgAQAAgABgD//wMABwAAAAAAWQAAAP4AAAAIAA0A/////wcAAAAAADQAAAB+AQAACAANAP////8HAAAAAABaAAAABgEAAAgADQD/////BwAAAAAANQAAAIYBAAAIAA0A/////wcAAAAAAFsAAAASAAAABgAPAP////8FAAAAAAA2AAAAjgEAAAgADQD/////BwAAAAAAXAAAANUBAAAIAA0A/////wcAAAAAADcAAACWAQAACAANAP////8HAAAAAABdAAAAGAAAAAYADwD/////BQAAAAAAOAAAAJ4BAAAIAA0A/////wcAAAAAAF4AAACeABAACAAGAP////8HAAAAAAA5AAAApgEAAAgADQD/////BwAAAAAAXwAAAL0AEAAIAAQA//8IAAcAAAAAADoAAABtABAABAAKAP//AgADAAAAAABgAAAAtQAQAAQABQD/////AwAAAAAAOwAAAPgBAAAEAAsA//8CAAMAAAAAAGEAAAAAABAACAAKAP//AgAHAAAAAAA8AAAAcQAQAAcACgD//wIABgAAAAAAYgAAAA4BAAAIAA0A/////wcAAAAAAD0AAACPABAACAAIAP//AgAHAAAAAABjAAAACAAQAAgACgD//wIABwAAAAAAPgAAAHgAEAAHAAoA//8CAAYAAAAAAGQAAAAWAQAACAANAP////8HAAAAAAA/AAAAugEAAAgADQD/////BwAAAAAAZQAAABAAEAAIAAoA//8CAAcAAAAAAEAAAADKAQAACwANAP////8KAAAAAABmAAAAHgEAAAgADQD/////BwAAAAAAQQAAADgAAAAIAA0A/////wcAAAAAAGcAAAAmAQAACAANAP//AgAHAAAAAABCAAAAQAAAAAgADQD/////BwAAAAAAaAAAAC4BAAAIAA0A/////wcAAAAAAEMAAABIAAAACAANAP////8HAAAAAABpAAAANgEAAAQADQD/////AwAAAAAARAAAAFAAAAAIAA0A/////wcAAAAAAGoAAAAAAAAABgAQAP////8FAAAAAAAgAAAAAAAAAAAAAAD//wAABQAAAAAARQAAAFgAAAAIAA0A/////wcAAAAAAGsAAAA6AQAACAANAP////8HAAAAAAAhAAAAtgEAAAQADQD/////AwAAAAAARgAAAGAAAAAIAA0A/////wcAAAAAAGwAAABCAQAABAANAP////8DAAAAAABHAAAAaAAAAAgADQD/////BwAAAAAAIgAAAK4AEAAHAAUA/////wYAAAAAAG0AAAAYABAACgAKAP//AgAJAAAAAABIAAAAcAAAAAgADQD/////BwAAAAAAIwAAAN0BAAAJAA0A/////wgAAAAAAG4AAAAiABAACAAKAP//AgAHAAAAAABJAAAAeAAAAAgADQD/////BwAAAAAAJAAAADAAAAAIAA4A/////wcAAAAAAAAAAAA"},{ name : "R_style_css", data : "LyogUG9zaXRpb25zICovDQouZ3JpZC10b3AtMSB7DQogICAgeDoxMjg7DQogICAgeTo5NjsNCn0NCg0KLmdyaWQtdG9wLTIgew0KICAgIHg6Mzg0Ow0KICAgIHk6OTY7DQp9DQoNCi5ncmlkLXRvcC0zIHsNCiAgICB4OjY0MDsNCiAgICB5Ojk2Ow0KfQ0KDQouZ3JpZC1taWQtMSB7DQogICAgeDoxMjg7DQogICAgeToyODg7DQp9DQoNCi5ncmlkLW1pZC0yIHsNCiAgICB4OjM4NDsNCiAgICB5OjI4ODsNCn0NCg0KLmdyaWQtbWlkLTMgew0KICAgIHg6NjQwOw0KICAgIHk6Mjg4Ow0KfQ0KDQouZ3JpZC1ib3QtMSB7DQogICAgeDoxMjg7DQogICAgeTo0ODA7DQp9DQoNCi5ncmlkLWJvdC0yIHsNCiAgICB4OjM4NDsNCiAgICB5OjQ4MDsNCn0NCg0KLmdyaWQtYm90LTMgew0KICAgIHg6NjQwOw0KICAgIHk6NDgwOw0KfQ0KDQouZ3JpZC1ob2xkZXIgew0KICAgIG1heC13aWR0aDogMjU2Ow0KICAgIG1pbi13aWR0aDogMjU2Ow0KICAgIA0KICAgIGxheW91dDp2ZXJ0aWNhbDsNCiAgICB2c3BhY2luZzoxMDsNCiAgICBtdWx0aWxpbmU6dHJ1ZTsNCn0NCg0KLmdyaWQtY2VudGVyLXRleHQgew0KICAgIG1heC13aWR0aDoyNTY7DQogICAgdGV4dC1hbGlnbjogY2VudGVyOw0KfQ0KDQojcmVzaXplTmVzdGVkIHsNCiAgICBzY2FsZS14OjAuMjsNCiAgICBzY2FsZS15OjAuMjsNCiAgICB0cmFuc2l0aW9uOnNjYWxlLXg7DQogICAgdHJhbnNpdGlvbjpzY2FsZS15Ow0KDQp9DQoNCiNyZXNpemVOZXN0ZWQuYmlnIHsNCiAgICBzY2FsZS14OjEuMDsNCiAgICBzY2FsZS15OjEuMDsNCiAgICB0cmFuc2l0aW9uOnNjYWxlLXg7DQogICAgdHJhbnNpdGlvbjpzY2FsZS15Ow0KfQ0KDQojZmlsdGVyZWROZXN0ZWQuZmlsdGVyZWQgew0KICAgIGZpbHRlcjogZ3JheXNjYWxlKCkgYmx1cigyKTsNCn0NCg0KDQojaGVscFRleHQgew0KICAgIHk6NzAwOw0KICAgIHg6MDsNCiAgICBtYXgtd2lkdGg6MTAyNDsNCiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7DQp9DQoNCiAgLyogPG5lc3RlZD4gc3R5bGVzICovDQoNCg0KbmVzdGVkIHsNCiAgICBwYWRkaW5nOjEwOw0KICAgIHdpZHRoOjEwMDsNCiAgICBoZWlnaHQ6MTAwOw0KICAgIGJhY2tncm91bmQ6IHllbGxvdzsNCn0NCg0KDQpuZXN0ZWQgbmVzdGVkIHsNCiAgICB4OjEwOw0KICAgIHk6MTA7DQogICAgd2lkdGg6ODA7DQogICAgaGVpZ2h0OjgwOw0KICAgIGJhY2tncm91bmQ6IHJlZDsNCn0NCg0KbmVzdGVkIG5lc3RlZCBuZXN0ZWR7DQogICAgeDoxMDsNCiAgICB5OjEwOw0KICAgIHdpZHRoOjYwOw0KICAgIGhlaWdodDo2MDsNCiAgICBiYWNrZ3JvdW5kOiBibHVlOw0KfQ0KDQpuZXN0ZWQgbmVzdGVkIG5lc3RlZCBuZXN0ZWR7DQogICAgeDoxMDsNCiAgICB5OjEwOw0KICAgIHdpZHRoOjQwOw0KICAgIGhlaWdodDo0MDsNCiAgICBiYWNrZ3JvdW5kOiBncmVlbjsNCn0NCg0KbmVzdGVkIG5lc3RlZCBuZXN0ZWQgbmVzdGVkIG5lc3RlZHsNCiAgICB4OjEwOw0KICAgIHk6MTA7DQogICAgd2lkdGg6MjA7DQogICAgaGVpZ2h0OjIwOw0KICAgIGJhY2tncm91bmQ6IHdoaXRlOw0KfQ0KDQogIC8qIDxidXR0b24+IHN0eWxlcyAqLw0KDQpidXR0b24gew0KICAgIG1pbi13aWR0aDoxMDA7DQogICAgaGVpZ2h0OjMwOw0KICAgIGJhY2tncm91bmQ6cmVkOw0KICAgIGN1cnNvcjpidXR0b247DQogICAgcGFkZGluZzo1Ow0KfQ0KYnV0dG9uIHRleHQgew0KICAgIGFsaWduOiBtaWRkbGUgbWlkZGxlOw0KICAgIA0KfQ0KDQpidXR0b246aG92ZXIgew0KICAgIGZpbHRlcjpicmlnaHRuZXNzKDAuNSk7DQp9DQoNCmJ1dHRvbjphY3RpdmUgew0KICAgIGJhY2tncm91bmQ6Z3JlZW47DQp9DQoNCi8qIDxiaXRtYXAgaWQ9ImJpdG1hcDEiLz4gKi8NCg0KI2JpdG1hcDEgew0KICAgIHg6NTUwOw0KICAgIHk6MzA7DQogICAgLyogY3VzdG9tIENTUyBwYXJzZXIgcHJvcGVydHk6IFNlZSBNeUN1c3RvbUNTU1BhcnNlci5oeCAqLw0KICAgIHNyYzogcGVybGluKDMwMCwgMzAwLCAyMC4wLCByZWQpOw0KfQ0KDQovKiA8c3F1YXJlcz4gKi8NCg0KI2FuaW1hdGlvblNxdWFyZXMgew0KICAgIHNjYWxlOjE7DQogICAgdHJhbnNpdGlvbjpyb3RhdGlvbjsNCiAgICANCn0NCg0KI2FuaW1hdGlvblNxdWFyZXMucm90YXRlIHsNCiAgICByb3RhdGlvbjoxODA7DQogICAgdHJhbnNpdGlvbjpyb3RhdGlvbjsNCn0NCg0Kc3F1YXJlcyB7DQogICAgbXVsdGlsaW5lOiB0cnVlOw0KICAgIG1heC13aWR0aDoxNDA7DQp9DQoNCiNmaWx0ZXJTcXVhcmVzLmZpbHRlcmVkew0KICAgIGZpbHRlcjpvdXRsaW5lKDgsIHdoaXRlKSBzYXR1cmF0ZSgxMDApOw0KfQ0KDQpzcXVhcmVzIGJpdG1hcC5zcXVhcmUxIHsNCiAgICAvKiBjdXN0b20gQ1NTIHByb3BlcnR5LCBzZWUgTXlDdXN0b21Dc3NQYXJzZXIgKi8NCiAgICBzcmM6IHBlcmxpbig2NCwgNjQsIDUuMCwgcmVkKTsNCn0NCg0Kc3F1YXJlcyBiaXRtYXAuc3F1YXJlMiB7DQogICAgLyogY3VzdG9tIENTUyBwcm9wZXJ0eSwgc2VlIE15Q3VzdG9tQ3NzUGFyc2VyICovDQogICAgc3JjOiBwZXJsaW4oNjQsIDY0LCAxMC4wLCBncmVlbik7DQp9DQpzcXVhcmVzIGJpdG1hcC5zcXVhcmUzIHsNCiAgICAvKiBjdXN0b20gQ1NTIHByb3BlcnR5LCBzZWUgTXlDdXN0b21Dc3NQYXJzZXIgKi8NCiAgICBzcmM6IHBlcmxpbig2NCwgNjQsIDMwLjAsIGJsdWUpOw0KfQ0Kc3F1YXJlcyBiaXRtYXAuc3F1YXJlNCB7DQogICAgLyogY3VzdG9tIENTUyBwcm9wZXJ0eSwgc2VlIE15Q3VzdG9tQ3NzUGFyc2VyICovDQogICAgc3JjOiBwZXJsaW4oNjQsIDY0LCAxMDAuMCwgYWxsKTsNCn0NCg0KI3RpdGxlVGV4dCB7DQogICAgbWF4LXdpZHRoOjEwMjQ7DQogICAgdGV4dC1hbGlnbjogY2VudGVyOw0KICAgIHk6MTA7DQp9DQoNCiNuZXh0QnV0dG9uIHsNCiAgICB4OjgwMDsNCiAgICB5OjcwMDsNCiAgICBmaWx0ZXI6Z3JheXNjYWxlKDAuNSkgb3V0bGluZSgxLCB3aGl0ZSk7DQp9DQoNCiNwcmV2QnV0dG9uIHsNCiAgICB4OjEwMDsNCiAgICB5OjcwMDsNCiAgICBmaWx0ZXI6Z3JheXNjYWxlKDAuNSkgb3V0bGluZSgxLCB3aGl0ZSk7DQogICAgDQp9DQoNCg0KDQoNCi8qIHNjcmVlbiAzICovDQoNCiNsaXN0IHsNCiAgICB2ZXJ0aWNhbDp0cnVlOw0KICAgIG1pbi13aWR0aDoxMDA7DQogICAgbWluLWhlaWdodDoxMDA7DQogICAgYmFja2dyb3VuZDogcmVkOw0KICAgIHZzcGFjaW5nOjM7DQp9DQppdGVtIHsNCiAgICBtaW4td2lkdGg6MTAwOw0KICAgIG1pbi1oZWlnaHQ6MTA7DQogICAgcGFkZGluZzo1Ow0KICAgIGJhY2tncm91bmQ6IGdyYXk7DQogICAgYWxwaGE6MDsNCiAgICB0cmFuc2l0aW9uOiBhbHBoYSAxczsNCiAgICANCn0NCml0ZW0uYWRkZWQgew0KICAgIHRyYW5zaXRpb246IGFscGhhIDFzOw0KICAgIGFscGhhOjE7DQp9DQoNCml0ZW06b2RkIHRleHQgew0KICAgIC8qIGN1c3RvbSBDU1MgcHJvcGVydHksIHNlZSBNeUN1c3RvbUNzc1BhcnNlciAqLw0KICAgIGZvbnQ6bXlmb250KG02eDExKTsNCn0NCg0KLyogaXRlbTpmaXJzdC1jaGlsZCB0ZXh0IHsNCiAgICBjb2xvcjp5ZWxsb3c7IA0KfQ0KDQoNCml0ZW06bGFzdC1jaGlsZCB0ZXh0ICB7DQogICAgY29sb3I6YmxhY2s7DQp9ICovDQoNCg0KaXRlbTpldmVuIHsNCiAgICBmaWx0ZXI6YnJpZ2h0bmVzcygwLjIpOw0KfQ0KDQoNCml0ZW0gdGV4dCB7DQogICAgY29sb3I6d2hpdGU7DQogICAgdGV4dC1zaGFkb3c6ICAxIDEgYmxhY2sgMC41Ow0KICAgIGhhbGlnbjptaWRkbGU7DQogICAgDQp9DQoNCi5idXR0b24tbGlzdCB7DQogICAgcGFkZGluZzo1cHg7DQogICAgdnNwYWNpbmc6NXB4Ow0KfQ0KDQoNCi8qIHNjcmVlbiA0ICAqLw0KDQpmbG93U2FtcGxlIHsNCiAgICBkZWJ1Zzp0cnVlOw0KfQ0KDQpmbG93SXRlbSB7DQogICAgd2lkdGg6NDA7IA0KICAgIGhlaWdodDo0MDsNCiAgICBiYWNrZ3JvdW5kOmdyZWVuOw0KfQ0KDQojZmxvd1NhbXBsZTEgew0KICAgIGxheW91dDp2ZXJ0aWNhbDsgDQp9DQoNCiNmbG93U2FtcGxlMiB7DQogICAgbGF5b3V0Omhvcml6b250YWw7IA0KfQ0KDQojZmxvd1NhbXBsZTMgew0KICAgIGxheW91dDpzdGFjazsgIA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tMSAgew0KICAgIHNjYWxlOjM7DQp9DQojZmxvd1NhbXBsZTMgLmZsb3ctaXRlbS0yIHsNCiAgICBzY2FsZToyLjU7DQogICAgYmFja2dyb3VuZDpyZWQ7IA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tMyB7DQogICAgc2NhbGU6MjsNCiAgICBiYWNrZ3JvdW5kOmJsdWU7IA0KfQ0KDQojZmxvd1NhbXBsZTMgZmxvd0l0ZW0uZmxvdy1pdGVtLTQgew0KICAgIHNjYWxlOjEuNTsNCiAgICBiYWNrZ3JvdW5kOnllbGxvdzsgIA0KfQ0KI2Zsb3dTYW1wbGUzIC5mbG93LWl0ZW0tNSB7DQogICAgc2NhbGU6MTsNCn0NCg0KLyogI2Zsb3dTYW1wbGUzIGZsb3dJdGVtOmZpcnN0LWNoaWxkIHsNCiAgICBzY2FsZToyOw0KICAgIGJhY2tncm91bmQ6Ymx1ZTsNCn0gKi8NCg0KLyogIERvZXMgbm90IHdvcms/DQoNCiNmbG93U2FtcGxlMyBmbG93SXRlbTpsYXN0LWNoaWxkIHsNCiAgICBzY2FsZTo0Ow0KICAgIGJhY2tncm91bmQ6Z3JheTsNCn0gKi8NCg0KLyogU2NyZWVuIDUgKi8NCg0Kc2VsZWN0b3IgdGV4dHsNCg0KICAgIGNvbG9yOmJsdWU7DQp9DQoNCm51bSB7DQogICAgYmFja2dyb3VuZDpncmF5Ow0KICAgIGxheW91dDp2ZXJ0aWNhbDsNCiAgICANCn0NCg0KdHggew0KICAgIGJhY2tncm91bmQ6Z3JheTsNCiAgICBsYXlvdXQ6dmVydGljYWw7DQogICAgDQp9DQpudW0gdGV4dCB7DQogICAgY29sb3I6I2NjYzsNCn0NCiNpZDEgbnVtIG51bSBudW0gdGV4dCB7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkMiA+IG51bSA+IG51bSA+IG51bSA+IHRleHQgew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCg0KI2lkMyA+IG51bSA+IHRleHR7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkNCBudW0gIHRleHQgew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDUgbnVtIG51bSAqOmV2ZW4gdGV4dCB7DQogICAgY29sb3I6IzJGMjsNCn0NCg0KI2lkNiAuQSAuQiAuQyB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDcgLkEgLkIgLkMuRCB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDggIHR4ICB0eCAuQyB0ZXh0ew0KICAgIGNvbG9yOiMyRjI7DQp9DQoNCiNpZDkgIHR4LkMgew0KICAgIGJhY2tncm91bmQ6IzJGMiAwLjU7DQp9DQoNCiNpZDEwIG51bSBudW0gbnVtIG51bTpldmVuIHRleHR7IA0KICAgIGNvbG9yOiMyRjI7IA0KfQ0KDQojaWQxMCBudW0gbnVtIG51bSBudW06b2RkIHRleHR7IA0KICAgIGNvbG9yOiNGRjI7IA0KfQ0KIA0KI2lkMTEgPiBudW0gPiBudW0gPiB0ZXh0eyANCiAgICBjb2xvcjpyZWQ7IA0KfQ0KDQojaWQxMSBudW0gbnVtIG51bSB0ZXh0eyANCiAgICBjb2xvcjpvcmFuZ2U7IA0KfQ0KDQoNCiNpZDEyIG51bSB7IA0KICAgIGJhY2tncm91bmQ6Ymx1ZSAwLjU7DQp9DQoNCg0KLyogU2NyZWVuIDcgKi8NCiNyZWN0NyB7DQogICAgd2lkdGg6MjA7DQogICAgaGVpZ2h0OjYwOw0KICAgIGNvbG9yOmdyZWVuOw0KfQ"}];
 haxe_ds_ObjectMap.count = 0;
 haxe_MainLoop.add(hxd_System.updateCursor,-1);
 var hx__registerFont;
@@ -51404,6 +51541,7 @@ domkit_CompItem.inst = new domkit_CompItem();
 domkit_CompMask.inst = new domkit_CompMask();
 domkit_CompNested.inst = new domkit_CompNested();
 domkit_CompNum.inst = new domkit_CompNum();
+domkit_CompRect.inst = new domkit_CompRect();
 domkit_CompScaleGrid.inst = new domkit_CompScaleGrid();
 domkit_CompScreen1.inst = new domkit_CompScreen1();
 domkit_CompScreen2.inst = new domkit_CompScreen2();
@@ -51411,6 +51549,7 @@ domkit_CompScreen3.inst = new domkit_CompScreen3();
 domkit_CompScreen4.inst = new domkit_CompScreen4();
 domkit_CompScreen5.inst = new domkit_CompScreen5();
 domkit_CompScreen6.inst = new domkit_CompScreen6();
+domkit_CompScreen7.inst = new domkit_CompScreen7();
 domkit_CompSelector.inst = new domkit_CompSelector();
 domkit_CompSquares.inst = new domkit_CompSquares();
 domkit_CompTx.inst = new domkit_CompTx();
