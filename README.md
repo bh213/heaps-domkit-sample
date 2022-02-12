@@ -18,17 +18,17 @@ Heaps javascript build of this repo is available [here](https://bh213.github.io/
 
 ## Samples
 
-### Screen1
+### [Screen1](/screens/Screen1Comp.hx)
  * DomKit components
  * DomKit classes
  * DomKit filters
 
-### Screen2
+### [Screen2](/screens/Screen2Comp.hx)
  * custom CSS property parsing for h2d.Tile, see `parseTile` in [MyCustomCSSParser.hx](MyCustomCSSParser.hx)
  ```
    src: perlin(64, 64, 5.0, red);
  ```  
-### Screen3
+### [Screen3](/screens/Screen3Comp.hx)
 * dynamically adding and removing DomKit components
 * custom CSS property parsing: fonts, see `parseFont` in [MyCustomCSSParser.hx](MyCustomCSSParser.hx)
 
@@ -36,15 +36,16 @@ Heaps javascript build of this repo is available [here](https://bh213.github.io/
 font:myfont(m6x11);
 ```
 
-### Screen4
+### [Screen4](/screens/Screen4Comp.hx)
+
 * h2d.Flow based components with various selectors
 
-### Screen5
+### [Screen5](/screens/Screen5Comp.hx)
 * DomKit CSS selectors
-### Screen6
+### [Screen6](/screens/Screen6Comp.hx)
 * CSS selectors and dynamically adding & removing DomKit components
 
-### Screen7
+### [Screen7](/screens/Screen7Comp.hx)
  * `@:uiComp` - DomKit companion classes. Also see them used in Heaps [source code](https://github.com/HeapsIO/heaps/blob/cf1468c74129e575b682577c7cb612bd51ae8090/h2d/domkit/BaseComponents.hx#L645)
 
 
