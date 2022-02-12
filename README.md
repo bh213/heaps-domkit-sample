@@ -16,21 +16,36 @@ Heaps javascript build of this repo is available [here](https://bh213.github.io/
 4) `haxe hl.hxml`
 5) `hl build/domkit-sample.hl`
 
-## Examples include
+## Samples
 
-* DomKit components
-* DomKit component discovery, see [DomKitInit.hx](DomKitInit.hx)
-* DomKit CSS filters
-* DomKit CSS transitions (scale, rotate)
-* adding custom CSS to existing DomKit components (font and tile, see [MyCustomCSSParser.hx](MyCustomCSSParser.hx))
-* CSS selectors (#id, .class, componentName)
-* CSS pseudo-classes
-* dynamically adding and removing components
-* styling flows
-* documented domkit inspection mode (text at the bottom of the screen)
+### Screen1
+ * DomKit components
+ * DomKit classes
+ * DomKit filters
 
+### Screen2
+ * custom CSS property parsing for h2d.Tile, see `parseTile` in [MyCustomCSSParser.hx](MyCustomCSSParser.hx)
+ ```
+   src: perlin(64, 64, 5.0, red);
+ ```  
+### Screen3
+* dynamically adding and removing DomKit components
+* custom CSS property parsing: fonts, see `parseFont` in [MyCustomCSSParser.hx](MyCustomCSSParser.hx)
 
+```
+font:myfont(m6x11);
+```
 
+### Screen4
+* h2d.Flow based components with various selectors
+
+### Screen5
+* DomKit CSS selectors
+### Screen6
+* CSS selectors and dynamically adding & removing DomKit components
+
+### Screen7
+ * `@:uiComp` - DomKit companion classes. Also see them used in Heaps [source code](https://github.com/HeapsIO/heaps/blob/cf1468c74129e575b682577c7cb612bd51ae8090/h2d/domkit/BaseComponents.hx#L645)
 
 
 ## Disclaimer
