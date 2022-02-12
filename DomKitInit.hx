@@ -10,8 +10,5 @@ class DomKitInit {
         domkit.Macros.registerComponentsPath("$MyComponent");
         domkit.Macros.registerComponentsPath("screens.$Comp");
         domkit.Macros.registerComponentsPath("screens.$MyComponent");
-        
-        
-        
     }
 }

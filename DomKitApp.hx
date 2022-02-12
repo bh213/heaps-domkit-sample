@@ -48,7 +48,6 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 	}
 }
 
-
 @:uiComp("button")
 class ButtonComp extends h2d.Flow implements h2d.domkit.Object {
 
@@ -80,14 +79,11 @@ class ButtonComp extends h2d.Flow implements h2d.domkit.Object {
 	}
 }
 
-
-
 class DomKitApp extends hxd.App {
 	
 	var style = null;
 
 	override function init() {
-
 		var root = new DomkitRootComp();
 		s2d.add(root);
 		style = new h2d.domkit.Style();
@@ -96,12 +92,7 @@ class DomKitApp extends hxd.App {
 		style.allowInspect = true;	
 		// Press ALT + middle button for domkit inspection		
 		style.inspectKeyCode = hxd.Key.ALT;			
-		
-
-	
-
 	}
-
 
 	override function update(dt:Float) {
 		style.sync();

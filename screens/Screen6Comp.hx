@@ -47,11 +47,7 @@ class Screen6Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 
 	public function new(?parent) {
 		super(parent);
-		
-		
-		
 		initComponent();
-		
 		
 		addNumButton10.onClick = () -> {
 			parent10.addChild(new NumMyComponent(4));
@@ -76,11 +72,8 @@ class Screen6Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 			var n = new NumMyComponent(2);
 			n.y = layers.getBounds().height;
 			layers.addChild(n);
-			
-			
 		}
 	}
-
 	
 	public function getTitle() {
 		return "CSS and dynamic adding/removing components";

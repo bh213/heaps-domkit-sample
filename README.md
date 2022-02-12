@@ -3,6 +3,11 @@
 
 This repo contains samples for [Heaps](https://github.com/HeapsIO/heaps) [DomKit](https://github.com/HeapsIO/domkit/) components and CSS.
 
+
+## Live example
+
+Heaps javascript build of this repo is available [here](https://bh213.github.io/heaps-domkit-sample/).
+
 ## Building
 
 1) Install [Hashlink](https://github.com/haxeFoundation/hashlink/)
@@ -25,8 +30,7 @@ This repo contains samples for [Heaps](https://github.com/HeapsIO/heaps) [DomKit
 * documented domkit inspection mode (text at the bottom of the screen)
 
 
-## HTML version
-HTML build is hosted on [GitHub pages](https://bh213.github.io/heaps-domkit-sample/)
+
 
 
 ## Disclaimer

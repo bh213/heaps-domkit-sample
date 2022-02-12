@@ -23,7 +23,6 @@ class Screen7Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 		super(parent);
 		initComponent();
 	}
-
 	
 	public function getTitle() {
 		return "creating components using @:domkitDecl - see code";
@@ -82,15 +81,12 @@ class Rectange extends h2d.Object {
 	}
 }
 
-
 @:uiComp("rect")  @:domkitDecl
 class RectMyComponent implements h2d.domkit.Object implements domkit.Component.ComponentDecl<Rectange>{
 	@:p var width : Int;
 	@:p var height : Int;
 	@:p(color) var color : Int;
 	//@:p var doesNotExist:Int; screens.Rectangle has no field doesNotExist
-
-
 }
 
 
