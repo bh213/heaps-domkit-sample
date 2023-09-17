@@ -416,5 +416,56 @@ num text {
 #rect7 {
     width:20;
     height:60;
-    color:green;
+    rect-color:green;
+}
+
+/* Screen 8 */
+screen8 .col1 {
+    transition:width 1s;
+    width:100;
+    height:100;
+
+}
+
+
+screen8.transitions .col1 {
+    transition:width;
+    width:200;
+    
+
+}
+
+screen8 .col2 {
+    transition:scale-x;
+    transition:scale-y;
+    scale-x:1;
+    scale-y:1;
+    width:100;
+    height:100;
+
+}
+
+
+screen8.transitions .col2 {
+    scale-x:2.5;
+    scale-y:2.5;
+    transition:scale-x;
+    transition:scale-y;
+
+}
+
+
+screen8 .col3 {
+    transition:rect-color;
+    rect-color:rgb(255,255,255,255);
+    width:100;
+    height:100;
+
+}
+
+
+screen8.transitions .col3 {
+    transition:rect-color;
+    rect-color:rgb(255,0,255,255);
+
 }

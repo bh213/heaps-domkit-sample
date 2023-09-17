@@ -1,4 +1,5 @@
-# @install: lix --silent download "haxelib:/hlsdl#1.10.0" into hlsdl/1.10.0/haxelib
+# @install: lix --silent download "gh://github.com/HaxeFoundation/hashlink#ba0e666c854302cf6c37451a6ce410e2a9d28be7" into hlsdl/1.10.0/github/ba0e666c854302cf6c37451a6ce410e2a9d28be7
 -lib hlopenal
--cp ${HAXE_LIBCACHE}/hlsdl/1.10.0/haxelib/
 -D hlsdl=1.10.0
+-cp ${HAXE_LIBCACHE}/hlsdl/1.10.0/github/ba0e666c854302cf6c37451a6ce410e2a9d28be7/libs/sdl/
+

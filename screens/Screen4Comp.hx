@@ -28,7 +28,7 @@ class Screen4Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 class FlowSampleMyComponent extends h2d.Flow implements h2d.domkit.Object {
 	static var SRC =
 	<flowSample>
-		${for (i in 1...6) <flowItem(${'${i}'}) class={'flow-item-${i}'}/>}
+		 ${for (i in 1...6) <flowItem(Std.string(i)) class={'flow-item-${Std.string(i)}'}/>}
 	</flowSample>;
 
 	public function new(?parent) {

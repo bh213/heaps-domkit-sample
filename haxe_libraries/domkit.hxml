@@ -1,3 +1,3 @@
-# @install: lix --silent download "gh://github.com/heapsIO/domkit#457da7c7fa77525ee3fb29ebf9dcfeb0e7e69942" into domkit/0.2.0/github/457da7c7fa77525ee3fb29ebf9dcfeb0e7e69942
--cp ${HAXE_LIBCACHE}/domkit/0.2.0/github/457da7c7fa77525ee3fb29ebf9dcfeb0e7e69942/
+# @install: lix --silent download "gh://github.com/heapsIO/domkit#09be92459f37b108621177520c134e89a1a994bc" into domkit/0.2.0/github/09be92459f37b108621177520c134e89a1a994bc
+-cp ${HAXE_LIBCACHE}/domkit/0.2.0/github/09be92459f37b108621177520c134e89a1a994bc/
 -D domkit=0.2.0

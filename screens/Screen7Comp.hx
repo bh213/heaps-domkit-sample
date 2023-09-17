@@ -12,7 +12,7 @@ class Screen7Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 		<rect/>
 	</flow>
 	<flow  class="grid-holder grid-top-2">
-		<rect width="50" height="50" color="red"/>
+		<rect width="50" height="50" rect-color="red"/>
 	</flow>
 	<flow  class="grid-holder grid-top-3">
 		<rect id="rect7"/>
@@ -32,11 +32,11 @@ class Screen7Comp extends h2d.Object implements BaseScreen implements h2d.domkit
 	}
 }
 
-class Rectange extends h2d.Object {
-	var graphics:h2d.Graphics;
+class Rectange extends h2d.Graphics {
+	
 	@:p public var width(default, set):Int;
 	@:p public var height(default, set):Int;
-	@:p public var color(default, set):Int;
+	@:p public var rectColor(default, set):Int;
 	var redraw = true;
 	
 	function set_height(height:Int):Int {
@@ -51,41 +51,42 @@ class Rectange extends h2d.Object {
 		return this.width;
 	}
 
-	function set_color(color:Int):Int {
-		this.color = color;
+	function set_rectColor(color:Int):Int {
+		trace(StringTools.hex(color));
+		this.rectColor = color;
 		redraw = true;
-		return this.color;
+		return this.rectColor;
 	}
 	
 	public function new(?parent) {
 		super(parent);
-		graphics = new h2d.Graphics(parent);
 		width = 100;
 		height = 100;
-		color = 0xffffffff;
+		rectColor = 0xffffffff;
 		redraw = true;
 	}
 
-	public function update() {
-		graphics.clear();
-		graphics.setColor(color);
-		graphics.beginFill(color, 1);
-		graphics.drawRect(0,0, width, height);
-		graphics.endFill();
+	function update() {
+		this.clear();
+		this.setColor(rectColor);
+		this.beginFill(rectColor, 1);
+		this.drawRect(0,0, width, height);
+		this.endFill();
 		redraw = false;
 	}
 
 	override function sync(ctx) {
-		super.sync(ctx);
 		if (redraw ) update();
+		super.sync(ctx);
+		
 	}
 }
 
 @:uiComp("rect")  @:domkitDecl
-class RectMyComponent implements h2d.domkit.Object implements domkit.Component.ComponentDecl<Rectange>{
+class RectMyComponent extends h2d.domkit.BaseComponents.ObjectComp implements domkit.Component.ComponentDecl<Rectange>{
 	@:p var width : Int;
 	@:p var height : Int;
-	@:p(color) var color : Int;
+	@:p(color) var rectColor : Int;
 	//@:p var doesNotExist:Int; screens.Rectangle has no field doesNotExist
 }
 

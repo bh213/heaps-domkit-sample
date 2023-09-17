@@ -16,7 +16,7 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 	</domkitRoot>;
 
 	var screens:Array<BaseScreen> = [];
-	var currentScreenIndex = 0;
+	var currentScreenIndex = 7;
 	public function new(?parent) {
 		super(parent);
 
@@ -27,6 +27,7 @@ class DomkitRootComp extends h2d.Object implements h2d.domkit.Object {
 		screens.push(new Screen5Comp(this));
 		screens.push(new Screen6Comp(this));
 		screens.push(new Screen7Comp(this));
+		screens.push(new Screen8Comp(this));
 		initComponent();
 		updateScreens();
 		
